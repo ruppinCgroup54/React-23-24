@@ -66,6 +66,11 @@ function DistanceB2Points(p1, p2) {
   return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
 }
 
+newPoint=()=>{
+  pArr2.push(new point(document.querySelector("#Xa").value,document.querySelector("#Ya").value));
+  myChart.update()
+}
+
 const loadChart = () => {
   pArr2.map((i) => i.Show());
 
@@ -129,5 +134,5 @@ const loadChart = () => {
     },
   };
 
-  new Chart("myChart", config);
+  myChart = new Chart("myChart", config);
 };

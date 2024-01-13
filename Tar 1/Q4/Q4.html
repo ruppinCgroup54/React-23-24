@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,17 +9,22 @@
 
   <script src="./Q4.js"></script>
   <style>
-    body{
-      display:flex;
+    body {
+      display: flex;
       justify-content: center;
       max-height: 450px;
       background-color: #e6ffffc4;
     }
-
   </style>
   <title>Document</title>
 </head>
+
 <body onload="loadChart()">
+
+  <input type="number" name="xA" id="Xa">
+  <input type="number" name="yA" id="Ya">
+  <input type="button" value="Enter" onclick="newPoint()">
   <canvas id="myChart" style="width: 100%;max-width: 900px;"></canvas>
 </body>
+
 </html>
