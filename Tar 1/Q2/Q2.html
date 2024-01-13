@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="Q2.js"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="Q2.css">
+</head>
+
+<body>
+
+    <form id="duckForm" class="form">
+        <div class="title">Duck form:</div>
+        <div class="input-container ic1">
+            <input type="text" name="Dname" class="input" placeholder=" " id="">
+            <div class="cut"></div>
+            <label for="Dname" class="placeholder">Name:</label>
+        </div>
+
+        <div class="input-container ic2">
+            <input type="text" name="Color" class="input" placeholder=" " id="">
+            <div class="cut"></div>
+            <label for="Color" class="placeholder">Color:</label>
+        </div>
+
+        <div class="input-container ic2">
+            <input type="text" name="Age" class="input" placeholder=" " id="">
+            <div class="cut"></div>
+            <label for="Age" class="placeholder">Age:</label>
+        </div>
+
+        <div class="input-container ic2">
+            <input type="text" name="Weight" class="input" placeholder=" " id="">
+            <div class="cut"></div>
+            <label for="Weight" class="placeholder">Weight:</label>
+        </div>
+
+        <div class="input-container ic2">
+            <input type="text" name="Photo" class="input" placeholder=" " id="">
+            <div class="cut"></div>
+            <label for="Photo" class="placeholder">Photo:</label>
+        </div>
+
+        <input type="button" class="submit" value="Submit" id="btn" onclick="Submit()"></input>
+    </form><br>
+
+    <div class="form1">
+        <input type="button" value="Quack" id="Quack" class="submit" onclick="newDuck.Quack()">
+        <input type="button" value="Show" id="Show" class="submit" onclick="ShowDetails()">
+    </div>
+</body>
+
+</html>
