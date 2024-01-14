@@ -9,22 +9,34 @@
 
   <script src="./Q4.js"></script>
   <style>
-    body {
-      display: flex;
-      justify-content: center;
-      max-height: 450px;
-      background-color: #e6ffffc4;
-    }
+
   </style>
+  <link rel="stylesheet" href="Q4.css">
   <title>Document</title>
 </head>
 
 <body onload="loadChart()">
 
-  <input type="number" name="xA" id="Xa">
-  <input type="number" name="yA" id="Ya">
-  <input type="button" value="Enter" onclick="newPoint()">
   <canvas id="myChart" style="width: 100%;max-width: 900px;"></canvas>
+
+  <form onsubmit="newPoint(event)" class="form">
+
+    <div class="subtitle">Enter new Point</div>
+
+    <div class="input-container ic2">
+      <input type="number" name="xA" id="Xa" class="input" placeholder=" ">
+      <div class="cut"></div>
+      <label for="xA" class="placeholder">X</label>
+    </div>
+    <div class="input-container ic2">
+      <input type="number" name="yA" id="Ya" class="input" placeholder=" ">
+      <div class="cut"></div>
+      <label for="yA" class="placeholder">Y</label>
+    </div>
+
+    <input type="submit" value="Enter" class="submit">
+  </form>
+
 </body>
 
 </html>

@@ -2,7 +2,8 @@
 
 class point {
   constructor(x, y) {
-    (this.x = x), (this.y = y);
+    this.x = parseFloat(x), 
+    this.y = parseFloat(y);
   }
 
   Show() {
@@ -50,8 +51,9 @@ console.log(ArrayEqualPoint(pArr, pNot));
 var pArr2 = [
   new point(1.2, 2),
   new point(4, 5.8),
-  new point(8, 7),
   new point(4.6, 7.9),
+  new point(8, 7),
+
 ];
 
 function MeasureTotalDistance(pointsArr) {
@@ -66,8 +68,10 @@ function DistanceB2Points(p1, p2) {
   return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
 }
 
-newPoint=()=>{
+newPoint=(e)=>{
+  e.preventDefault();
   pArr2.push(new point(document.querySelector("#Xa").value,document.querySelector("#Ya").value));
+
   myChart.update()
 }
 
@@ -96,7 +100,7 @@ const loadChart = () => {
       plugins: {
         title: {
           display: true,
-          text: `Total distance = ${MeasureTotalDistance(pArr2)}`,
+          text: () => `Total distance = ${MeasureTotalDistance(pArr2)}`,
           font:{
             size:40
           }
