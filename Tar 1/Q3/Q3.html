@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+<script src="./Q3.js"></script>
+<style>
+    .header {
+        font-family: monospace;
+    }
+    body{
+        background-color: lightcyan;
+        text-align: center;
+
+    }
+    #div02{
+        font-family: cursive;
+        
+    }
+    .lower{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    button{
+        background-color: rgba(0, 82, 234, 0.915);
+        color: aliceblue;
+        border:0px;
+        border-radius: 5px;
+        height: 25px;
+        width: 40px;
+    }
+</style>
+    </head>
+<body>
+    <div class="container">
+        <div class="header">  
+            <h1>Clock seconds converter</h1>
+            <h3>please insert hour format and the name of a country</h3> 
+            <h4>after 5 times , the doc will print your writen data</h4>
+            
+        </div>
+        <div class="lower">   
+            <!-- <div class="col"> -->
+                <form onsubmit="rendi(event)" id="my-form">
+                    <!-- אם אין לך כוח לבדוק אם מילאו את הטופס שים REQUIERD -->
+                    <input type="number" placeholder=hh id="hour" name="hour" required />
+                    <input type="number" placeholder="mm" id="min" name="min" required/>
+                     <input type="number" placeholder="ss" id="sec" name="sec" required/>
+                     <input type="text" placeholder=country id="country" name="country" required/>
+                     <!-- <button onclick="rendi()">go</button><br><br> -->
+                     <button type="submit"> Go</button>
+                    
+                </form> 
+            <!-- </div> -->
+            <div id="div02">
+                
+            </div>
+        </div>
+    </div>
+    
+    
+</body>
+</html>
