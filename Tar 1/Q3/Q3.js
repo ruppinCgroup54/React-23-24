@@ -8,34 +8,15 @@ class clock {
   static clockArr = [];
 
   show() {
-    // לא חייב
-    let ho = this.hh;
-    let mi = this.mm;
-    let se = this.ss;
-    
 
-    //את הולידאציה צריך לעשות בפונקציה שיוצרת את האובייקט לא בהדפסה
-    if (ho > 23 || mi > 59 || se > 59 || se < 0 || mi < 0 || ho < 0) {
-      alert(
-        "Please insert digits by the right format: hours must be between 0-23. min and sec between 0-59, and all positive"
-      );
-    }
-
-    let tmpArr = [ho, mi, se];
+    let tmpArr = [this.hh, this.mm, this.ss];
     for (let i = 0; i < tmpArr.length; i++) {
-      if (tmpArr[i].length > 2) {
-        alert(`2 digit max in each number box`);
-      } else {
         if (tmpArr[i].length == 1) {
           tmpArr[i] = "0" + tmpArr[i];
-        }
       }
     }
-    console.log(tmpArr);
-    console.log(this.hh + ":" + this.mm + ":" + this.ss + "   " + this.country);
     let str = `${tmpArr[0]} : ${tmpArr[1]} : ${tmpArr[2]}`;
     return str;
-    document.getElementById("div02").innerHTML = str;
   }
 
   convertToseconds() {
@@ -49,13 +30,8 @@ class clock {
 function rendi(e) {
 
     e.preventDefault();
-  // var ty=document.getElementById("hour").value;
-  // var ty01=document.getElementById("min").value;
-  // var ty02=document.getElementById("sec").value;
-  // var ty03=document.getElementById("country").value;
-  var form = document.getElementById("my-form");
 
-  //    var temp=new clock(ty,ty01,ty02,ty03);
+  var form = document.getElementById("my-form");
 
   var temp = new clock(
     form.hour.value,
@@ -65,17 +41,13 @@ function rendi(e) {
   );
 
   clock.clockArr.push(temp);
-  //    document.getElementById("hour").value = "";
-  //    document.getElementById("min").value = "";
-  //    document.getElementById("sec").value = "";
-  //    document.getElementById("country").value = "";
+
   form.reset();
 
-
-  console.log(clock.clockArr);
-
   temp.show();
+
   temp.convertToseconds();
+  
   if (clock.clockArr.length == 5) {
     print02();
   }

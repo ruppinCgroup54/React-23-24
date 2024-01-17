@@ -40,14 +40,11 @@
             
         </div>
         <div class="lower">   
-            <!-- <div class="col"> -->
                 <form onsubmit="rendi(event)" id="my-form">
-                    <!-- אם אין לך כוח לבדוק אם מילאו את הטופס שים REQUIERD -->
-                    <input type="number" placeholder=hh id="hour" name="hour" required />
-                    <input type="number" placeholder="mm" id="min" name="min" required/>
-                     <input type="number" placeholder="ss" id="sec" name="sec" required/>
+                    <input type="number" placeholder=hh id="hour" name="hour" required min="0" max="23"/>
+                    <input type="number" placeholder="mm" id="min" name="min" required min="0" max="59"/>
+                     <input type="number" placeholder="ss" id="sec" name="sec" required min="0" max="59"/>
                      <input type="text" placeholder=country id="country" name="country" required/>
-                     <!-- <button onclick="rendi()">go</button><br><br> -->
                      <button type="submit"> Go</button>
                     
                 </form> 
