@@ -7,7 +7,9 @@ class point {
   }
 
   Show() {
-    console.log(`x value = ${this.x}, y value = ${this.y}`);
+    let showp=`x value = ${this.x}, y value = ${this.y}`;
+    console.log(showp);
+    return showp;
   }
 
   Equals(p) {
@@ -25,8 +27,8 @@ var pArr = [
   new point(-6, 3),
 ];
 
-const pIn = new point(2, -9);
-const pNot = new point(1, 1);
+const pIn = new point(2, -9); //point that exists
+const pNot = new point(1, 1); // point dosn't exists
 
 // Q4 - 2
 
