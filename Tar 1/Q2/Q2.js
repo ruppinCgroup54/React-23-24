@@ -8,7 +8,7 @@ class Duck {
     }
 
     Show = () => {
-        var printDetails = `name: ${this.name}, color: ${this.color}, age: ${this.age}, weight: ${this.weight}`;
+        var printDetails = `name: ${this.name}, age: ${this.age}, weight: ${this.weight}`;
         var photo = this.photo
         return { printDetails, photo };
     }
@@ -30,7 +30,7 @@ class Duck {
 
 Submit = () => {
     var detailes = document.getElementById("duckForm");
-    newDuck = new Duck(detailes.Dname.value, detailes.Color.value, detailes.Age.value, detailes.Weight.value, detailes.Photo.value);
+    newDuck = new Duck(detailes.Dname.value, detailes.Color.value, detailes.Age.value, detailes.Weight.value, detailes.Photo.files[0]);
     document.getElementById("Quack").style.visibility = "visible";
     document.getElementById("Show").style.visibility = "visible";
     document.getElementById("btn").disabled = true;
@@ -42,14 +42,15 @@ ShowDetails = () => {
         if (pArr) {
             pArr.remove();
         }
-    var duckDetails = newDuck.Show();
+    var {printDetails, photo} = newDuck.Show();
+    document.querySelector(".form1").style.backgroundColor=newDuck.color;
     var print = document.createElement("p");
-    print.innerHTML = duckDetails.printDetails;
+    print.innerHTML = printDetails;
     print.id = "newPar";
     print.classList.add("subtitle");
     document.querySelector(".form1").append(print);
     var Dimage = document.createElement("img");
-    Dimage.src = `${duckDetails.photo}`;
+    Dimage.src = window.URL.createObjectURL(photo);
     var src = document.getElementById("newPar");
     src.appendChild(Dimage);
 }
@@ -72,3 +73,9 @@ function playSound(audio, numberOfTimes = 3, delay = 1500, firstTime = true) {
     setTimeout(Repeat, delay)
 }
 
+// imgInp.onchange = evt => {
+//     const [file] = imgInp.files
+//     if (file) {
+//       blah.src = URL.createObjectURL(file)
+//     }
+//   }
