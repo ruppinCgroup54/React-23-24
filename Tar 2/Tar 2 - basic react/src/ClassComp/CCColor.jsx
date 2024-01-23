@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import  { Component } from 'react'
 
 export default class CCColor extends Component {
   constructor(props) {
@@ -16,7 +15,7 @@ export default class CCColor extends Component {
     return (
       <div style={{backgroundColor:this.state.color}}>
         
-        {this.colors.map(col => <span style={{color:col}}> {col} </span>)}
+        {this.colors.map(col => <span style={{color:col}} key={col}> {col} </span>)}
 
       </div>
     )
