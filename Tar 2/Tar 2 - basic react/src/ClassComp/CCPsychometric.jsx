@@ -1,5 +1,7 @@
 import { Component } from "react";
 import { render } from "react-dom";
+import "../CSSComp/CCPsychometric.css"
+
 
 export default class CCPsychometric extends Component {
 
@@ -40,13 +42,14 @@ export default class CCPsychometric extends Component {
             case "pg":
                 this.setState({ visible3: "none" });
                 if (e.target.value>555) {
-                    this.setState({ accepted: "You can be accepted for studies." });
-                    this.setState({color: "green"});
+                    this.setState({ accepted: "You can be accepted for studies.", color: "green" });
                 }
                 else{
                     if (e.target.value!= "") {
-                        this.setState({ accepted: "You should try next year." });
-                        this.setState({color: "red"});
+                        this.setState({ accepted: "You should try next year.", color: "red" });
+                    }
+                    else{
+                        this.setState({ accepted: ""});
                     }
                 }
                 break;
@@ -55,16 +58,19 @@ export default class CCPsychometric extends Component {
 
     render() {
         return (
-            <form style={{border: '3px solid black', padding: '5px', borderRadius: '10px', backgroundColor: '#E6E6FA'}}>
+            <form style={this.formStyle}>
                 <h4 style={{fontSize: '25px', margin: '0'}}>Psychometric Form</h4>
-                <p style={{ color: 'red', display: this.state.visible1 }} >Please set your Private name</p>
+
+                <p style={{display: this.state.visible1 }} >Please set your Private name</p>
                 Private name: <input type="text" id="pn" onFocus={this.redPshow} onBlur={this.redPhide} /><br />
-                <p style={{ color: 'red', display: this.state.visible2 }} id="p">Please set your last name</p>
+
+                <p style={{display: this.state.visible2 }}>Please set your last name</p>
                 Last name: <input type="text" id="ln" onFocus={this.redPshow} onBlur={this.redPhide} /><br />
-                <p style={{ color: 'red', display: this.state.visible3 }} id="p">Please set your Psychometric grade</p>
+
+                <p style={{display: this.state.visible3 }}>Please set your Psychometric grade</p>
                 Psychometric grade: <input type="text" id="pg" onFocus={this.redPshow} onBlur={this.redPhide} /><br />
                 <b style={{color: this.state.color}}>{this.state.accepted}</b>
-            </form>
+            </form> 
         );
     }
 }
