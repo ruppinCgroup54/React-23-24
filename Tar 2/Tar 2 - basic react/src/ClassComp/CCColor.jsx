@@ -25,6 +25,7 @@ export default class CCColor extends Component {
     }
   }
 
+  
   colors = ['red', 'green', 'yellow', 'blue', 'pink', 'black', 'purple', 'orange']
 
 
