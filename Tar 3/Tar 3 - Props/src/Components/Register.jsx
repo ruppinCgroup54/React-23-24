@@ -119,13 +119,9 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Checkbox, FormControl, FormControlLabel, Grid, IconButton, Input, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
+import { Checkbox, FormControl, FormControlLabel, Grid, IconButton, Input, InputAdornment, InputLabel, MenuItem, OutlinedInput, TextField } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
 
 
 
@@ -164,7 +160,7 @@ export default function Register() {
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
-            Checkout
+            Register
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
@@ -221,20 +217,50 @@ function RegisterDataForm() {
     e.preventDefault();
   };
 
+  const [userName, setUserName] = useState({
+    value: "",
+    valid: true,
+    message: 'User name can contain only latin letters, numbers and special charectors'
+  });
+  const [email, setEmail] = useState({
+    value: "",
+    valid: true,
+    message: ''
+  });
+
+  const userNameHandel = (e) => {
+    let input = e.currentTarget;
+    let newState = {
+      valid: input.value.match('^[a-zA-Z0-9$@$!%*?&#^-_.+]+$'),
+      value: input.value
+    };
+    console.log(newState);
+
+    setUserName(prev => { return { ...prev, ...newState } });
+  }
+
+  const emailHandel = (e) => {
+    let input = e.currentTarget;
+    let newState = {
+      valid: input.checkValidity(),
+      value: input.value
+    };
+    console.log(newState);
+
+    setEmail(prev => { return { ...prev, ...newState } });
+  }
+
   return (
     <>
       <Typography variant="h6" gutterBottom>
         User Detailes
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container component='form' noValidate spacing={3} >
 
         {/* User name */}
         <Grid item xs={12}>
           <TextField
             required
-            inputProps={{
-              pettern: '^[a-zA-Z0-9$@$!%*?&#^-_.+]+$',
-            }}
             type='text'
             id="userName"
             name="userName"
@@ -242,32 +268,33 @@ function RegisterDataForm() {
             fullWidth
             autoComplete="User name"
             variant="outlined"
-
+            error={!userName.valid}
+            helperText={!userName.valid && userName.message}
+            onBlur={userNameHandel}
           />
         </Grid>
 
         {/* Email */}
         <Grid item xs={12}>
-          <FormControl fullWidth>
-            <InputLabel htmlFor="email"> Enter your email</InputLabel>
-            <OutlinedInput
-              inputProps={{
-                'type': 'email',
-              }}
+          <TextField
+              fullWidth
+              required
+              type='email'
               id="email"
               name="email"
               label="Enter your email"
-              autoComplete="shipping address-line2"
-              variant="outlined"
-              onBlur={(e) => console.log(e.currentTarget.checkValidity())}
+              autoComplete="email"
+              error={!email.valid}
+              helperText={!email.valid && email.message}
+              onBlur={emailHandel}
             />
-          </FormControl>
+          
         </Grid>
 
         {/* Password */}
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <InputLabel htmlFor="password">Password</InputLabel>
+            <InputLabel required htmlFor="password">Password</InputLabel>
             <OutlinedInput
               id="password"
               label="Password"
@@ -292,7 +319,7 @@ function RegisterDataForm() {
         {/* Password confirm */}
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <InputLabel htmlFor="passwordConfirm">Password</InputLabel>
+            <InputLabel required htmlFor="passwordConfirm">Password confirm</InputLabel>
             <OutlinedInput
               id="passwordConfirm"
               label="Password confirm"
@@ -352,19 +379,31 @@ function UserDetailsForm() {
       {/* Image */}
       <Grid item xs={12} sm={6}>
         <TextField
-          id="state"
-          name="state"
-          label="State/Province/Region"
-          fullWidth
-          variant="outlined"
+          fullWidth required
+          type='file'
+          id='file'
+          name='file'
+          label='Image'
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
       </Grid>
 
       {/* Date of birth */}
       <Grid item xs={12} sm={6}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker label="Basic date picker" />
-        </LocalizationProvider>
+        <TextField
+          required fullWidth
+          type='date'
+          id='DateOB'
+          name='DateOB'
+          label='date of birth'
+          InputLabelProps={{
+            shrink: true,
+          }}
+          autoComplete='date'
+        />
+
       </Grid>
 
     </Grid>
@@ -373,51 +412,55 @@ function UserDetailsForm() {
 }
 
 function AddressForm() {
+
+  const [cities, setCitties] = useState(['tel aviv', 'reshon']);
+
   return (
     <>
       <Typography variant="h6" gutterBottom>
-        Payment method
+        Address
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cardName"
-            label="Name on card"
-            fullWidth
-            autoComplete="cc-name"
-            variant="outlined"
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cardNumber"
-            label="Card number"
-            fullWidth
-            autoComplete="cc-number"
-            variant="outlined"
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="expDate"
-            label="Expiry date"
-            fullWidth
-            autoComplete="cc-exp"
-            variant="outlined"
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <OutlinedInput type='number' variant='outlined' fullWidth />
-        </Grid>
+
+        {/* city  */}
         <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-            label="Remember credit card details for next time"
+          <TextField
+            required
+            select
+            id="city"
+            label="City"
+            fullWidth
+            autoComplete="city"
+            variant="outlined"
+          >
+            {cities.map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
+
+        {/* street */}
+        <Grid item xs={12} md={8}>
+          <TextField
+            required
+            id="street"
+            label="Street"
+            fullWidth
+            autoComplete="street"
+            variant="outlined"
           />
         </Grid>
+
+        {/* house number */}
+        <Grid item xs={12} md={4}>
+          <TextField required fullWidth type='number'
+            variant='outlined'
+            label='House number'
+            inputProps={{ min: 0 }} />
+        </Grid>
+
       </Grid>
     </>
   );
