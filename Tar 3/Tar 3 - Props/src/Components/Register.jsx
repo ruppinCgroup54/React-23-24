@@ -1,116 +1,6 @@
 
-// export default function Register() {
-
-
-
-
-
-
-
-
-
-//   return (
-//     <form className="row g-3 w-75 m-auto">
-
-//       <div className="col-md-12 ">
-//         <div className="input-group mb-3 flex-nowrap ">
-//           <span className="input-group-text">@</span>
-//           <div className="form-floating flex-grow-1 ">
-//             <input type="email" className="form-control" id="inputEmail" placeholder="Email" />
-//             <label htmlFor="inputEmail">Email</label>
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className="col-md-6">
-//         <div className="input-group mb-3 flex-nowrap">
-//           <span className="input-group-text">*</span>
-//           <div className="form-floating flex-grow-1">
-//             <input type="password" className="form-control" id="inputPass" placeholder="Password" autoComplete="current-password" />
-//             <label htmlFor="inputPass">Password</label>
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className="col-md-6">
-//         <div className="input-group mb-3 flex-nowrap">
-//           <span className="input-group-text">*</span>
-//           <div className="form-floating flex-grow-1">
-//             <input type="password" className="form-control" id="inputConformPass" placeholder="Password" />
-//             <label htmlFor="inputConformPass"> Conform Password</label>
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className="col-md-4">
-//         <div className="input-group mb-3 flex-nowrap">
-//           <span className="input-group-text">*</span>
-//           <div className="form-floating flex-grow-1 ">
-//             <input type="text" className="form-control" id="inputFName" placeholder="First name" />
-//             <label htmlFor="inputFName"> First name</label>
-//           </div>
-//         </div>
-//       </div>
-
-
-//       <div className="col-md-4">
-//         <div className="input-group mb-3 flex-nowrap">
-//           <span className="input-group-text">*</span>
-//           <div className="form-floating flex-grow-1">
-//             <input type="text" className="form-control" id="inputUserName" maxLength={60} placeholder="User Name" pattern="" />
-//             <label htmlFor="inputUserName"> User Name</label>
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className="col-md-4">
-//         <div className="form-floating ">
-//           <input type="date" className="form-control" id="inputDOB" placeholder="User Name" />
-//           <label htmlFor="inputDOB"> Date of birth</label>
-//         </div>
-//       </div>
-
-
-//       <div class="input-group mb-3">
-//         <label class="input-group-text" for="inputGroupFile01">Upload image</label>
-//         <input type="file" class="form-control" id="inputGroupFile01" />
-//       </div>
-
-//       <div className="col-md-4">
-//         <div className="form-floating ">
-
-//           <input list="inputCity" className="form-control" name="city" />
-//           <label htmlFor="city" className="form-label">City</label>
-
-//           <datalist id="inputCity" >
-//             <option value='...' />
-//           </datalist>
-//         </div>
-//       </div>
-
-//       <div className="col-md-4">
-//         <div className="form-floating ">
-//           <input id="inputStreet" className="form-control" name="street" placeholder="Street" />
-//           <label htmlFor="street" >Street</label>
-//         </div>
-//       </div>
-//       <div className="col-md-4">
-//         <div className="form-floating ">
-//           <input type='number' id="inputStreet" className="form-control" name="HouseNumber" placeholder="House number" />
-//           <label htmlFor="HouseNumber" >House Number</label>
-//         </div>
-//       </div>
-
-
-//       <div className="col-12">
-//         <button type="submit" className="btn btn-primary">Sign in</button>
-//       </div>
-//     </form>
-//   )
-// }
-
-
 import { useState } from 'react';
+
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
@@ -119,22 +9,22 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Checkbox, FormControl, FormControlLabel, Grid, IconButton, Input, InputAdornment, InputLabel, MenuItem, OutlinedInput, TextField } from '@mui/material';
+import { FormControl, Grid, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, TextField } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
 
-const steps = ['User identifier', 'User details', 'Address',];
+const steps = ['User details', 'User identifier'];
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <RegisterDataForm />;
-    case 1:
       return <UserDetailsForm />
-    case 2:
-      return <AddressForm />;
+
+    case 1:
+      return <RegisterDataForm />;
+
     default:
       throw new Error('Unknown step');
   }
@@ -228,7 +118,7 @@ function RegisterDataForm() {
     message: ''
   });
 
-  const userNameHandel = (e) => {
+  const userNameHandle = (e) => {
     let input = e.currentTarget;
     let newState = {
       valid: input.value.match('^[a-zA-Z0-9$@$!%*?&#^-_.+]+$'),
@@ -239,7 +129,7 @@ function RegisterDataForm() {
     setUserName(prev => { return { ...prev, ...newState } });
   }
 
-  const emailHandel = (e) => {
+  const emailHandle = (e) => {
     let input = e.currentTarget;
     let newState = {
       valid: input.checkValidity(),
@@ -259,36 +149,35 @@ function RegisterDataForm() {
 
         {/* User name */}
         <Grid item xs={12}>
-          <TextField
-            required
+          <TextField required
             type='text'
             id="userName"
             name="userName"
             label="User name"
             fullWidth
-            autoComplete="User name"
+            autoComplete="username"
             variant="outlined"
             error={!userName.valid}
             helperText={!userName.valid && userName.message}
-            onBlur={userNameHandel}
+            onBlur={userNameHandle}
           />
         </Grid>
 
         {/* Email */}
         <Grid item xs={12}>
           <TextField
-              fullWidth
-              required
-              type='email'
-              id="email"
-              name="email"
-              label="Enter your email"
-              autoComplete="email"
-              error={!email.valid}
-              helperText={!email.valid && email.message}
-              onBlur={emailHandel}
-            />
-          
+            fullWidth
+            required
+            type='email'
+            id="email"
+            name="email"
+            label="Enter your email"
+            autoComplete="email"
+            error={!email.valid}
+            helperText={!email.valid && email.message}
+            onBlur={emailHandle}
+          />
+
         </Grid>
 
         {/* Password */}
@@ -299,6 +188,7 @@ function RegisterDataForm() {
               id="password"
               label="Password"
               type={showPassword ? 'text' : 'password'}
+              autoComplete='new-password'
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -324,6 +214,7 @@ function RegisterDataForm() {
               id="passwordConfirm"
               label="Password confirm"
               type={showPasswordCon ? 'text' : 'password'}
+              autoComplete='new-password'
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -347,6 +238,8 @@ function RegisterDataForm() {
 }
 
 function UserDetailsForm() {
+
+  const cities = ['tel aviv', 'herzelia']
 
   return (
     <Grid container spacing={3}>
@@ -401,68 +294,53 @@ function UserDetailsForm() {
           InputLabelProps={{
             shrink: true,
           }}
-          autoComplete='date'
+          autoComplete='bday'
         />
 
       </Grid>
 
+      {/* city  */}
+      <Grid item xs={12} md={4}>
+        <TextField
+          required
+          select
+          id="city"
+          label="City"
+          fullWidth
+          autoComplete="home-city"
+          variant="outlined"
+        >
+          {cities.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
+
+      {/* street */}
+      <Grid item xs={12} md={4}>
+        <TextField
+          required
+          id="street"
+          label="Street"
+          fullWidth
+          autoComplete="street-address"
+          variant="outlined"
+        />
+      </Grid>
+
+      {/* house number */}
+      <Grid item xs={12} md={4} >
+        <TextField required fullWidth type='number'
+          variant='outlined'
+          label='House number'
+          inputProps={{ min: 0 }} />
+      </Grid>
     </Grid>
 
   )
 }
 
-function AddressForm() {
 
-  const [cities, setCitties] = useState(['tel aviv', 'reshon']);
-
-  return (
-    <>
-      <Typography variant="h6" gutterBottom>
-        Address
-      </Typography>
-      <Grid container spacing={3}>
-
-        {/* city  */}
-        <Grid item xs={12}>
-          <TextField
-            required
-            select
-            id="city"
-            label="City"
-            fullWidth
-            autoComplete="city"
-            variant="outlined"
-          >
-            {cities.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
-
-        {/* street */}
-        <Grid item xs={12} md={8}>
-          <TextField
-            required
-            id="street"
-            label="Street"
-            fullWidth
-            autoComplete="street"
-            variant="outlined"
-          />
-        </Grid>
-
-        {/* house number */}
-        <Grid item xs={12} md={4}>
-          <TextField required fullWidth type='number'
-            variant='outlined'
-            label='House number'
-            inputProps={{ min: 0 }} />
-        </Grid>
-
-      </Grid>
-    </>
-  );
-}
 
