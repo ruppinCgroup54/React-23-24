@@ -12,7 +12,7 @@ function App() {
 
   return (
     <>
-      {screens[1]}
+      {screens[0]}
       
     </>
   )
