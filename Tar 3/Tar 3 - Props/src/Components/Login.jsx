@@ -1,141 +1,132 @@
-import * as React from 'react';
 import {Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid, Typography} from '@mui/material';
-// import Avatar from '@mui/material/Avatar';
-// import Button from '@mui/material/Button';
-// import CssBaseline from '@mui/material/CssBaseline';
-// import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
-// import Paper from '@mui/material/Paper';
-// import Box from '@mui/material/Box';
-// import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-// import Typography from '@mui/material/Typography';
 
 import Image from '../images/LoginImg1.jpg';
 import { useState } from 'react'
 
 
-// export default function Login() {
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//     const data = new FormData(event.currentTarget);
-//     console.log({
-//       email: data.get('email'),
-//       password: data.get('password'),
-//     });
-//   };
-
 export default function Login() {
-  const [userName, setUserName] = useState({
-    value:'',
-    helpertxt: '',
 
+  let tempUserName='';
+  let tempPassword='';
+  const [userName, setUserName] = useState({
+    value:"",
+    valid: true
   }); 
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState({
+    value:"",
+    valid: true
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      userName: data.get('userName'),
+      password: data.get('password'),
+    });
+    // console.log(event.currentTarget.checkValidity());
+  };
 
   const chgUserName=(userName)=>{
-    userName.ma
+   
     setUserName(userName)
   };
 
 
   return (
-    <>
-    <TextField type="text" id="userName" label="User name" variant="outlined" 
-               required onChange={e=>chgUserName(e.target.value)}/>
-    <br /> <br />
-    <TextField type="password" id="password" label="Password" variant="outlined" />
-    </>
-      // <Grid container component="main" sx={{ height: '100vh'}}>
-      //   <CssBaseline />
-      //   <Grid
-      //     item
-      //     xs={false}
-      //     sm={4}
-      //     md={7}
-      //     sx={{
-      //       backgroundImage: `url(${Image})`,
-      //       backgroundRepeat: 'no-repeat',
-      //       backgroundColor: (t) =>
-      //         t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-      //       backgroundSize: 'cover',
-      //       backgroundPosition: 'center',
-      //     }}
-      //   />
-      //   <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-      //     <Box
-      //       sx={{
-      //         my: 8,
-      //         mx: 4,
-      //         display: 'flex',
-      //         flexDirection: 'column',
-      //         alignItems: 'center',
-      //       }}
-      //     >
-      //       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-      //         <LockOutlinedIcon />
-      //       </Avatar>
-      //       <Typography component="h1" variant="h5">
-      //         Sign in
-      //       </Typography>
-      //       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-      //         <TextField
-      //           margin="normal"
-      //           required
-      //           fullWidth
-      //           id="userName"
-      //           label="User name"
-      //           name="userName"
-      //           autoComplete="userName"
-      //           autoFocus
-      //           value={userName}
-      //           onChange={e=>chgUserName(e.target.value)}
-      //           error={!userName}
-      //           helperText={!userName? 'Required' : ''}
-      //           inputProps={{
-      //             maxLength: '60',
-      //             pattern: '/[a-zA-Z]+/g'
-      //           }}
-      //         />
-      //         <TextField
-      //           margin="normal"
-      //           required
-      //           fullWidth
-      //           name="password"
-      //           label="Password"
-      //           type="password"
-      //           id="password"
-      //           autoComplete="current-password"
-      //         />
-      //         <FormControlLabel
-      //           control={<Checkbox value="remember" color="primary" />}
-      //           label="Remember me"
-      //         />
-      //         <Button
-      //           type="submit"
-      //           fullWidth
-      //           variant="contained"
-      //           sx={{ mt: 3, mb: 2 }}
-      //         >
-      //           Sign In
-      //         </Button>
-      //         <Grid container>
-      //           <Grid item xs>
-      //             <Link href="#" variant="body2">
-      //               Forgot password?
-      //             </Link>
-      //           </Grid>
-      //           <Grid item>
-      //             <Link href="#" variant="body2">
-      //               {"Don't have an account? Sign Up"}
-      //             </Link>
-      //           </Grid>
-      //         </Grid>
-      //       </Box>
-      //     </Box>
-      //   </Grid>
-      // </Grid>
+      <Grid container component="main" sx={{ height: '100vh'}}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage: `url(${Image})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: (t) =>
+              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="userName"
+                label="User name"
+                name="userName"
+                autoComplete="userName"
+                autoFocus
+                onChange={e=>tempUserName=e.target.value}
+                error={!userName.valid}
+                inputProps={{
+                  maxLength: 60,
+                  pattern: "^[A-Za-z0-9]+$"
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={e=>tempPassword=e.target.value}
+                error={!password.valid}
+                inputProps={{
+                  maxLength: 12,
+                  pattern: "^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.\\W)(?!.* ).{7,12}$"
+                }}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="#" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
   );
 }
