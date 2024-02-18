@@ -69,7 +69,7 @@ export default function Register() {
         tempUsers = [...tempUsers, user]
         localStorage.setItem('users', JSON.stringify(tempUsers));
 
-        sessionStorage.setItem('currentUser',user)
+        sessionStorage.setItem('currentUser', user)
       }
       else {
         console.log('User allready exists')
@@ -88,7 +88,7 @@ export default function Register() {
   return (
     <>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+        <Paper variant="outlined"  elevation={6} sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
             Registertion form
           </Typography>
@@ -105,7 +105,7 @@ export default function Register() {
                 Regesration was successfull
               </Typography>
               <Typography variant="subtitle1">
-                <Button variant="contained"  sx={{ mt: 3, ml: 1 }}>continue</Button>
+                <Button variant="contained" sx={{ mt: 3, ml: 1 }}>continue</Button>
               </Typography>
             </>
           ) : (
