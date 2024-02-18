@@ -16,11 +16,11 @@ function App() {
 
   }
 
-  const screens = [<Login key={0} />, <Register key={1} />, <Profile key={2} />]
+  const screens = [<Login key={0}/>, <Register key={1} />, <Profile key={2} />]
 
   return (
     <>
-      <Button  onClick={chngScreen} >Login/Sign-in</Button>
+      <Button variant='contained' onClick={chngScreen} >Login/Sign-in</Button>
       {screens[screenToShow]}
 
     </>

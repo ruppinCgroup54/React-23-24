@@ -2,6 +2,7 @@ import { Autocomplete, Grid, TextField } from "@mui/material";
 import { useState } from "react";
 import { allCities } from "../assets/cities";
 import PropTypes from 'prop-types';
+import useValide from "../Hooks/useValide";
 
 
 export default function UserDetailsForm({ sendData }) {
@@ -71,6 +72,7 @@ export default function UserDetailsForm({ sendData }) {
     sendData(tempUser)
   }
 
+  const [passValid, passText, setPass] = useValide({ email: "" })
 
 
   return (
