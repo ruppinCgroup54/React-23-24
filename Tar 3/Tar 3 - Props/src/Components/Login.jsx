@@ -1,34 +1,28 @@
 import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import { InputAdornment } from '@mui/material';
-import { IconButton } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 
 
 import Image from '../images/users.jpg';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useValide from '../Hooks/useValide';
+import PasswordTextField from './PasswordTextField';
 
 
 export default function Login() {
 
-  const [userNameValid, userNameText, setuserName] = useValide('userName');
-  const [passValid, passText, setPass] = useValide('password');
+  const [userNameValue, userNameError, userNameText, setUserName] = useValide('userName');
 
+  const [remember, setRemember] = useState(false);
 
-  const [userName, setUserName] = useState({
-    value: "",
-    valid: true
-  });
-  const [password, setPassword] = useState({
-    value: "",
-    valid: true
-  });
+  let rememberUser = JSON.parse(localStorage.getItem('last user'));
 
-  const [eye, setEye] = useState(true);
+  useEffect(() => {
+    let lastUser = JSON.parse(localStorage.getItem('last user'));
+    let rememberUser = lastUser == null ? '' : lastUser;
+    setUserName(rememberUser['userNam']);
+  }, [])
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -37,53 +31,23 @@ export default function Login() {
       userName: data.get('userName'),
       password: data.get('password'),
     };
+    //delete after finish
     localStorage.setItem("users", JSON.stringify([user]));
     loginUser(user);
 
   };
 
   const loginUser = (user) => {
-
     let usersFromLocal = JSON.parse(localStorage.getItem("users"));
     let exist = usersFromLocal.some(user => user['userName'] === user.userName && user['password'] === user.password);
     if (exist) {
       sessionStorage.setItem("currentUser", JSON.stringify(user));
+      if (remember) {
+        localStorage.setItem('last user', JSON.stringify(user))
+      }
     }
   };
 
-  const chgUserName = (event) => {
-    let valid = event.currentTarget.checkValidity();
-    if (valid) {
-      setUserName({
-        value: event.target.value,
-        valid
-      })
-    }
-    else {
-      let prev = userName;
-      setUserName({ ...prev, valid })
-    };
-    console.log(userName);
-  };
-
-  const chgPassword = (event) => {
-    let valid = event.currentTarget.checkValidity();
-    if (valid) {
-      setPassword({
-        value: event.currentTarget.value,
-        valid
-      })
-    }
-    else {
-      let prev = password;
-      setPassword({ ...prev, valid })
-    };
-    console.log(password);
-  };
-
-  const chgEye = () => {
-    setEye(!eye);
-  }
 
   return (
     <Grid container component="main" >
@@ -128,40 +92,16 @@ export default function Login() {
               name="userName"
               autoComplete="userName"
               autoFocus
-              onChange={chgUserName}
-              error={!userName.valid}
-              inputProps={{
-                maxLength: 60,
-                pattern: "^[A-Za-z0-9]+$"
-              }}
+              onChange={(e) => setUserName(e.target.value)}
+              error={userNameError}
+              helperText={userNameText}
+              value={userNameValue}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type={eye ? "password" : "text"}
-              id="password"
-              autoComplete="current-password"
-              onChange={chgPassword}
-              error={!password.valid}
-              inputProps={{
-                maxLength: 12,
-                pattern: `^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\\W)(?!.* ).{7,12}$`,
-                  
-              }}
-              InputProps={{
-                endAdornment:(<InputAdornment position="end">
-                <IconButton onClick={chgEye}>
-                  {!eye ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                </IconButton>
-              </InputAdornment>)
-              }}
-            />
+            <PasswordTextField></PasswordTextField>
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" color="primary" checked={remember} />}
               label="Remember me"
+              onChange={(e) => setRemember(e.target.checked)}
             />
             <Button
               type="submit"

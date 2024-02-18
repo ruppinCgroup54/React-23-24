@@ -43,7 +43,7 @@ export default function useValide(Value2Check) {
 
 
   // const [first, setfirst] = useState(second)
-  return [valid, text, handlePassword];
+  return [valid,true, text, handlePassword];
 
 
 }
