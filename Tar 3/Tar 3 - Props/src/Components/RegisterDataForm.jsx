@@ -14,80 +14,13 @@ export default function RegisterDataForm({ sendData }) {
     e.preventDefault();
   };
 
-  const [userName, setUserName] = useState({
-    value: "",
-    valid: true,
-    message: 'User name can contain only latin letters, numbers and special charectors'
-  });
-  const [email, setEmail] = useState({
-    value: "",
-    valid: true,
-    message: 'Insert valid email'
-  });
-  const [password, setPassword] = useState({
-    value: "",
-    valid: true,
-    message: 'Password must contain at One number one uppercase letter and one special character'
-  });
+ 
   const [passwordConf, setPasswordConf] = useState(true);
   const [userData, setUserData] = useState({});
 
 
   // handlers section
-  const userNameHandle = (e) => {
-    let input = e.currentTarget;
-    let newState = {
-      valid: input.checkValidity() || input.value === "",
-      value: input.value
-    };
 
-    addDataToUser({ userName: input.value });
-
-    let prev = userName;
-    setUserName({ ...prev, ...newState });
-
-  }
-
-  const emailHandle = (e) => {
-    let input = e.currentTarget;
-
-    let newState = {
-      valid: input.checkValidity() || input.value === "",
-      value: input.value,
-      message: input.validationMessage,
-    };
-
-    addDataToUser({ email: input.value });
-
-
-    let prev = email;
-
-    setEmail({ ...prev, ...newState });
-  }
-
-  const passwordHandle = (e) => {
-
-    let input = e.currentTarget;
-
-    let newState = {
-      valid: input.checkValidity(),
-      value: input.value,
-    };
-
-
-
-    if (input.value.length < 7) {
-      newState.message = 'Password minimun lengh must be 7';
-    }
-
-    addDataToUser({ password: input.value });
-
-
-    let prev = password;
-
-    setPassword({ ...prev, ...newState });
-
-  }
 
   const addDataToUser = (attr) => {
 
@@ -114,9 +47,6 @@ export default function RegisterDataForm({ sendData }) {
             fullWidth
             autoComplete="username"
             variant="outlined"
-            inputProps={{
-              pattern: '^[a-zA-Z0-9$@$!%*?&#^-_.+]+$'
-            }}
             error={!userName.valid}
             helperText={!userName.valid && userName.message}
             onChange={userNameHandle}
@@ -161,11 +91,6 @@ export default function RegisterDataForm({ sendData }) {
                   </IconButton>
                 </InputAdornment>
               }
-              inputProps={{
-                maxLength: 12,
-                pattern: `^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\\W)(?!.* ).{7,12}$`
-
-              }}
               error={!password.valid && password.value !== ""}
               helpertext={!password.valid ? password.message : ""}
               onBlur={passwordHandle}
