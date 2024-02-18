@@ -35,7 +35,7 @@ export default function useValide(Value2Check) {
       setErrorsFalse(userNameVal);
   }
 
-  const handlePassword = (newPassword) => {
+  const handlePassword = (newPassword="") => {
 
     let pattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\\W)(?!.* ).{7,12}$/
 
@@ -43,7 +43,6 @@ export default function useValide(Value2Check) {
     !pattern.test(newPassword) && newPassword !== "" ? setErrorsTrue(errorMassege, newPassword) : setErrorsFalse(newPassword);
 
   }
-
   const handleName = () => {
     let pattern = /^[a-zA-Z0-9$@$!%*?&#^-_.+]+$/
     let massege = 'User name can contain only latin letters, numbers and special charectors';

@@ -15,7 +15,7 @@ export default function PasswordTextField() {
 
     useEffect(() => {
         let lastUser=JSON.parse(localStorage.getItem('last user'));
-        let rememberUser = lastUser==null? '':lastUser;
+        let rememberUser = lastUser==null? {userName: "", password: ""} : lastUser;
         setPass(rememberUser['password']);
     }, [])
 
@@ -35,6 +35,7 @@ export default function PasswordTextField() {
               type={eye ? "password" : "text"}
               id="password"
               autoComplete="current-password"
+              value={passValue}
               onChange={(e)=>setPass(e.target.value)}
               error={passError}
               helperText={passText}

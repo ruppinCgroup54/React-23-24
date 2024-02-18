@@ -19,8 +19,8 @@ export default function Login() {
 
   useEffect(() => {
     let lastUser = JSON.parse(localStorage.getItem('last user'));
-    let rememberUser = lastUser == null ? '' : lastUser;
-    setUserName(rememberUser['userNam']);
+    let rememberUser = lastUser == null ? {userName: "", password: ""} : lastUser;
+    setUserName(rememberUser['userName']);
   }, [])
 
 
