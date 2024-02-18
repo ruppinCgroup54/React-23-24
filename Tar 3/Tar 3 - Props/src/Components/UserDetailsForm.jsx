@@ -72,12 +72,13 @@ export default function UserDetailsForm({ sendData }) {
     sendData(tempUser)
   }
 
-  const [passValid, passText, setPass] = useValide({ email: "" })
+  const [passValid, passText, setPass] = useValide('password');
 
 
   return (
-    <Grid container spacing={3}>
 
+    <Grid container spacing={3}>
+      {passValid + " " + passText}
       {/* First name */}
       <Grid item xs={12} sm={6}>
         <TextField
@@ -92,7 +93,8 @@ export default function UserDetailsForm({ sendData }) {
           }}
           error={!firstNameValid}
           helperText={!firstNameValid && "Name must contain only letters"}
-          onChange={firstNameHandle}
+          // onChange={firstNameHandle}
+          onChange={(e) => setPass(e.currentTarget.value)}
         />
       </Grid>
 

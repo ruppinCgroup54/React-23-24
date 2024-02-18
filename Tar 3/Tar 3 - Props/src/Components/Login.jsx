@@ -10,9 +10,14 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import Image from '../images/users.jpg';
 import { useState } from 'react'
+import useValide from '../Hooks/useValide';
 
 
 export default function Login() {
+
+  const [userNameValid, userNameText, setuserName] = useValide('userName');
+  const [passValid, passText, setPass] = useValide('password');
+
 
   const [userName, setUserName] = useState({
     value: "",
@@ -153,8 +158,6 @@ export default function Login() {
                 </IconButton>
               </InputAdornment>)
               }}
-
-
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
