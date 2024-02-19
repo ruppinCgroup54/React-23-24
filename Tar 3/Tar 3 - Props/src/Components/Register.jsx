@@ -4,29 +4,23 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import UserDetailsForm from './UserDetailsForm';
-import RegisterDataForm from './RegisterDataForm';
-import { Autocomplete, Grid, Popper, TextField } from '@mui/material';
+import { Autocomplete, Grid, TextField } from '@mui/material';
+
 import useValide from '../Hooks/useValide';
 import PasswordTextField from './PasswordTextField';
 import { allCities } from '../assets/cities';
+import Modal from './TransitionsModal';
+import TransitionsModal from './TransitionsModal';
 
 
-const steps = ['User details', 'User identifier'];
 
 
 export default function Register() {
 
-  const [activeStep, setActiveStep] = useState(0);
-  const [userData, setUserData] = useState({});
+  //using custom hook of text filed for validation handling 
 
-
-  //using custom hook of text filed for validation handling
   const [firstName, firstNameError, firstNameText, setFirstName] = useValide('name');
   const [lastName, lastNameError, lastNameText, setLastName] = useValide('name');
   const [image, imageError, imageText, setImage] = useValide('image');
@@ -40,21 +34,25 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [passwordConf, setPasswordConf] = useState(false);
 
-  const getUserData = (data) => {
-    let prev = userData;
+  const [openModal, setOpenModal] = useState(false);
 
-    setUserData({ ...prev, ...data })
-    console.log('data', userData)
-  }
 
-  const forms = [
-    <UserDetailsForm key={1} sendData={getUserData} />,
-    <RegisterDataForm key={2} sendData={getUserData} />,
-
-  ]
 
   const handleSubmit = (e) => {
-    RegisterUser(userData);
+    let newUser = {
+      firstName,
+      lastName,
+      image,
+      dateOB,
+      city,
+      street,
+      house,
+      userName,
+      email
+    }
+
+    //if register return false show modal of fail
+    setOpenModal(!RegisterUser(newUser));
 
     e.stopPropagation();
     e.preventDefault();
@@ -63,26 +61,31 @@ export default function Register() {
 
   const RegisterUser = (user) => {
 
+    //check is users existss
     if (localStorage.getItem('users') !== null) {
 
       let tempUsers = JSON.parse(localStorage.getItem('users'));
 
-      if (!tempUsers.find(u => u.userName == user.userName)) {
+      //check if the current user isn't exists
+      if (!tempUsers.find(u => u.userName == user.userName || u.email == user.email)) {
         tempUsers = [...tempUsers, user]
         localStorage.setItem('users', JSON.stringify(tempUsers));
 
-        sessionStorage.setItem('currentUser', user)
+        //if the user mange to register we activet sign-in function
+        //need to import sign in function
+        sessionStorage.setItem('currentUser', user);
+
       }
       else {
         console.log('User allready exists')
-        
+        return false;
       }
     }
     else {
       localStorage.setItem('users', JSON.stringify([user]));
 
     }
-
+    return true;
   }
 
   return (
@@ -271,6 +274,7 @@ export default function Register() {
           </Box>
         </Paper>
       </Container>
+      <TransitionsModal toggle={{openModal,setOpenModal}}  text={'User already exists'} />
     </>
   );
 }

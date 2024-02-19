@@ -25,8 +25,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Button variant='contained' onClick={chngScreen} >Login/Sign-in</Button>
-      {screens[screenToShow]}
+      {screens.map(s => s)}
     </BrowserRouter>
   )
 }
