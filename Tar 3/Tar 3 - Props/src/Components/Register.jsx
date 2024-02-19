@@ -11,7 +11,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import UserDetailsForm from './UserDetailsForm';
 import RegisterDataForm from './RegisterDataForm';
-import { Popper } from '@mui/material';
+import { Autocomplete, Grid, Popper, TextField } from '@mui/material';
+import useValide from '../Hooks/useValide';
+import PasswordTextField from './PasswordTextField';
+import { allCities } from '../assets/cities';
 
 
 const steps = ['User details', 'User identifier'];
@@ -21,45 +24,44 @@ export default function Register() {
 
   const [activeStep, setActiveStep] = useState(0);
   const [userData, setUserData] = useState({});
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(false);
 
 
+  //using custom hook of text filed for validation handling
+  const [firstName, firstNameError, firstNameText, setFirstName] = useValide('name');
+  const [lastName, lastNameError, lastNameText, setLastName] = useValide('name');
+  const [image, imageError, imageText, setImage] = useValide('image');
+  const [dateOB, dateError, dateText, setDate] = useValide('date');
+  const [city, , , setCity] = useValide('city');
+  const [street, streetError, streetText, setStreet] = useValide('street');
+  const [house, houseError, houseText, setHouse] = useValide('houseNumber');
+  const [userName, userNameError, userNameText, setUserName] = useValide('userName');
+  const [email, emailError, emailText, setEmail] = useValide('userName');
 
+  const [password, setPassword] = useState("");
+  const [passwordConf, setPasswordConf] = useState(false);
 
   const getUserData = (data) => {
     let prev = userData;
 
     setUserData({ ...prev, ...data })
-    console.log('data', prev)
+    console.log('data', userData)
   }
 
   const forms = [
     <UserDetailsForm key={1} sendData={getUserData} />,
-    <RegisterDataForm key={2} sendData={getUserData} />
+    <RegisterDataForm key={2} sendData={getUserData} />,
+
   ]
 
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
-
   const handleSubmit = (e) => {
-
-    console.log(e.currentTarget);
-
-    setOpen(false)
-    setAnchorEl(e.currentTarget);
-
-    activeStep === 1 && addUserToLS(userData);
-
-    setActiveStep(prev => prev + 1);
+    RegisterUser(userData);
 
     e.stopPropagation();
     e.preventDefault();
 
   }
 
-  const addUserToLS = (user) => {
+  const RegisterUser = (user) => {
 
     if (localStorage.getItem('users') !== null) {
 
@@ -73,9 +75,7 @@ export default function Register() {
       }
       else {
         console.log('User allready exists')
-        setActiveStep(prev => prev - 1);
-        setOpen(true)
-
+        
       }
     }
     else {
@@ -87,50 +87,193 @@ export default function Register() {
 
   return (
     <>
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-        <Paper variant="outlined"  elevation={6} sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-          <Typography component="h1" variant="h4" align="center">
+
+      <Container component="main" maxWidth="sm" >
+        <Paper elevation={6} sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+          <Typography component="h1" variant="h4" align="center" mb={2}>
             Registertion form
           </Typography>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          {activeStep === steps.length ? (
-            <>
-              <Typography variant="h5" gutterBottom>
-                Regesration was successfull
-              </Typography>
-              <Typography variant="subtitle1">
-                <Button variant="contained" sx={{ mt: 3, ml: 1 }}>continue</Button>
-              </Typography>
-            </>
-          ) : (
-            <Box component='form' onSubmit={handleSubmit} >
-              {forms[activeStep]}
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                {activeStep !== 0 && (
-                  <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}> Back </Button>
-                )}
-                <Popper id="regstratin-problem" open={open} anchorEl={anchorEl} >
-                  <Typography component={'h4'}>User Already exists</Typography>
-                </Popper>
+          <Box component='form' onSubmit={handleSubmit} >
+            <Grid container spacing={3} >
+              {/* User name */}
+              <Grid item xs={12}>
+                <TextField required
+                  type='text'
+                  id="userName"
+                  name="userName"
+                  label="User name"
+                  fullWidth
+                  autoComplete="username"
+                  error={userNameError}
+                  helperText={userNameText}
+                  onChange={(e) => setUserName(e.currentTarget.value)}
+                />
+              </Grid>
 
-                <Button type='submit' variant="contained" sx={{ mt: 3, ml: 1 }} >
-                  {activeStep === steps.length - 1 ? 'Register' : 'Next'}
-                </Button>
-              </Box>
-            </Box>
-          )}
+              {/* Email */}
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  required
+                  type='email'
+                  id="email"
+                  name="email"
+                  label="Enter your email"
+                  autoComplete="email"
+                  error={emailError}
+                  helperText={emailText}
+                  onChange={(e) => setEmail(e.currentTarget.value)}
+                />
+
+              </Grid>
+
+              {/* Password */}
+              <Grid item xs={12} sm={6}>
+                <PasswordTextField sendPass={setPassword} />
+              </Grid>
+
+              {/* Password confirm */}
+              <Grid item xs={12} sm={6}>
+
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password confirm"
+                  type='password'
+                  autoComplete="current-password"
+                  onChange={(e) => { setPasswordConf(e.target.value !== password) }}
+                  error={passwordConf}
+                  helperText={passwordConf && "Password dosen't match"}
+                />
+
+              </Grid>
+              {/* First name */}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="firstName"
+                  name="firstName"
+                  label="First name"
+                  fullWidth
+                  autoComplete="given-name"
+                  value={firstName}
+                  error={firstNameError}
+                  helperText={firstNameText}
+                  onChange={(e) => setFirstName(e.currentTarget.value)}
+                />
+              </Grid>
+
+              {/* Last name */}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="lastName"
+                  name="lastName"
+                  label="Last name"
+                  fullWidth
+                  autoComplete="family-name"
+                  value={lastName}
+                  error={lastNameError}
+                  helperText={lastNameText}
+                  onChange={(e) => setLastName(e.currentTarget.value)}
+                />
+              </Grid>
+
+              {/* Image */}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth required
+                  type='file'
+                  id='file'
+                  name='file'
+                  label='Image'
+                  inputProps={{
+                    accept: "image/jpg, image/jpeg"
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  // value={imageVal}
+                  error={imageError}
+                  helperText={imageText}
+                  onChange={setImage}
+                />
+              </Grid>
+
+              {/* Date of birth */}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required fullWidth
+                  type='date'
+                  id='DateOB'
+                  name='DateOB'
+                  label='Date of birth'
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  autoComplete='bday'
+                  error={dateError}
+                  helperText={dateText}
+                  onChange={(e) => setDate(e.currentTarget.value)}
+                />
+
+              </Grid>
+
+              {/* city  */}
+              <Grid item xs={12} md={4}>
+                <Autocomplete
+                  fullWidth
+                  required
+                  id="city"
+                  options={allCities.sort((a, b) => -b.name[0].localeCompare(a.name[0]))}
+                  groupBy={(option) => option.name[0]}
+                  getOptionLabel={(option) => option.name}
+                  renderInput={(params) => <TextField {...params} label="Cities" />}
+                  onInputChange={(e, val) => setCity(val)}
+
+                />
+              </Grid>
+
+              {/* street */}
+              <Grid item xs={12} md={4}>
+                <TextField
+                  required
+                  id="street"
+                  label="Street"
+                  fullWidth
+                  autoComplete="street-address"
+                  value={street}
+                  error={streetError}
+                  helperText={streetText}
+                  onChange={(e) => setStreet(e.currentTarget.value)}
+                />
+              </Grid>
+
+              {/* house number */}
+              <Grid item xs={12} md={4} >
+                <TextField required fullWidth type='number'
+                  label='House number'
+                  inputProps={{ min: 0 }}
+                  value={house}
+                  error={houseError}
+                  helperText={houseText}
+                  onChange={(e) => setHouse(e.currentTarget.value)}
+                />
+
+
+              </Grid>
+              <Button type='submit' variant="contained" sx={{ my: 3, mx: 'auto' }} >
+                Register
+              </Button>
+            </Grid>
+          </Box>
         </Paper>
       </Container>
     </>
   );
 }
-
 
 
 

@@ -1,5 +1,5 @@
 import { Autocomplete, Grid, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { allCities } from "../assets/cities";
 import PropTypes from 'prop-types';
 import useValide from "../Hooks/useValide";
@@ -7,72 +7,34 @@ import useValide from "../Hooks/useValide";
 
 export default function UserDetailsForm({ sendData }) {
 
-
-  const [firstNameValid, setFirstNameValid] = useState(true);
-  const [lastNameValid, setLastNameValid] = useState(true);
-  const [streetValid, setStreetValid] = useState(true);
-  const [dateValid, setDateValid] = useState(true)
-
-  const [userData, setUserData] = useState({})
-
-  const firstNameHandle = (e) => {
-
-    let input = e.currentTarget;
-
-    addDataToUser({ firstName: input.value })
-
-    setFirstNameValid(input.checkValidity() || input.value === "");
-  }
-
-  const lastNameHandle = (e) => {
-
-    let input = e.currentTarget;
-
-    addDataToUser({ lastName: input.value })
-
-    setLastNameValid(input.checkValidity() || input.value === "");
-  }
-
-  const streetHandel = (e) => {
-
-    let input = e.currentTarget;
-
-    addDataToUser({ street: input.value })
-
-    setStreetValid(input.checkValidity() || input.value === "");
-  }
-
-  const imageHandle = (e) => {
-    let file = e.currentTarget.files[0]; // 0 = get the first file
+//using custom hook of text filed for validation handling
+  const [firstName, firstNameError, firstNameText, setFirstName] = useValide('name');
+  const [lastName, lastNameError, lastNameText, setLastName] = useValide('name');
+  const [image, imageError, imageText, setImage] = useValide('image');
+  const [dateOB, dateError, dateText, setDate] = useValide('date');
+  const [city, , , setCity] = useValide('city');
+  const [street, streetError, streetText, setStreet] = useValide('street');
+  const [house, houseError, houseText, setHouse] = useValide('houseNumber');
 
 
-    let reader = new FileReader();
+//send user data to main register component on unmount
+  useEffect(() => {
+    return () => {
+      let userObj = {
+        firstName,
+        lastName,
+        image,
+        dateOB,
+        city,
+        street,
+        house
+      }
+      sendData(userObj);
 
-    reader.onloadend = (eFile) => {
-      addDataToUser({ image: eFile.target.result });
     }
+  }, [])
 
-    reader.readAsDataURL(file)
 
-  }
-
-  const dateHandle = (e) => {
-    let input = e.currentTarget;
-
-    addDataToUser({ dateOfBirth: input.value })
-
-    setDateValid(input.checkValidity() || input.value === "");
-
-  }
-
-  const addDataToUser = (attr) => {
-
-    let tempUser = { ...userData, ...attr };
-    setUserData(tempUser);
-    sendData(tempUser)
-  }
-
-  const [passVall, passError, passText, setPass] = useValide('password');
 
 
   return (
@@ -87,14 +49,10 @@ export default function UserDetailsForm({ sendData }) {
           label="First name"
           fullWidth
           autoComplete="given-name"
-          // inputProps={{
-          //   pattern: "^[a-zA-Z\u0590-\u05FF]+$"
-          // }}
-          value={passVall}
-          error={passError}
-          helperText={passText}
-          // onChange={firstNameHandle}
-          onChange={(e) => setPass(e.currentTarget.value)}
+          value={firstName}
+          error={firstNameError}
+          helperText={firstNameText}
+          onChange={(e) => setFirstName(e.currentTarget.value)}
         />
       </Grid>
 
@@ -107,12 +65,10 @@ export default function UserDetailsForm({ sendData }) {
           label="Last name"
           fullWidth
           autoComplete="family-name"
-          inputProps={{
-            pattern: "^[a-zA-Z\u0590-\u05FF]+$"
-          }}
-          error={!lastNameValid}
-          helperText={!lastNameValid && "Name must contain only letters"}
-          onChange={lastNameHandle}
+          value={lastName}
+          error={lastNameError}
+          helperText={lastNameText}
+          onChange={(e) => setLastName(e.currentTarget.value)}
         />
       </Grid>
 
@@ -130,7 +86,10 @@ export default function UserDetailsForm({ sendData }) {
           InputLabelProps={{
             shrink: true,
           }}
-          onChange={imageHandle}
+          // value={imageVal}
+          error={imageError}
+          helperText={imageText}
+          onChange={setImage}
         />
       </Grid>
 
@@ -145,12 +104,10 @@ export default function UserDetailsForm({ sendData }) {
           InputLabelProps={{
             shrink: true,
           }}
-          inputProps={{
-            max: '2006-12-31'
-          }}
           autoComplete='bday'
-          error={!dateValid}
-          onChange={dateHandle}
+          error={dateError}
+          helperText={dateText}
+          onChange={(e) => setDate(e.currentTarget.value)}
         />
 
       </Grid>
@@ -165,7 +122,7 @@ export default function UserDetailsForm({ sendData }) {
           groupBy={(option) => option.name[0]}
           getOptionLabel={(option) => option.name}
           renderInput={(params) => <TextField {...params} label="Cities" />}
-          onInputChange={(e, val) => addDataToUser({ city: val })}
+          onInputChange={(e, val) => setCity(val)}
 
         />
       </Grid>
@@ -178,22 +135,22 @@ export default function UserDetailsForm({ sendData }) {
           label="Street"
           fullWidth
           autoComplete="street-address"
-          inputProps={{
-            pattern: "^[\u0590-\u05FF]*$"
-          }}
-          error={!streetValid}
-          helperText={!streetValid && "Name must contain only letters"}
-          onChange={streetHandel}
+          value={street}
+          error={streetError}
+          helperText={streetText}
+          onChange={(e) => setStreet(e.currentTarget.value)}
         />
       </Grid>
 
       {/* house number */}
       <Grid item xs={12} md={4} >
         <TextField required fullWidth type='number'
-          variant='outlined'
           label='House number'
           inputProps={{ min: 0 }}
-          onChange={(e) => addDataToUser({ houseNum: e.currentTarget.value })}
+          value={house}
+          error={houseError}
+          helperText={houseText}
+          onChange={(e) => setHouse(e.currentTarget.value)}
         />
 
 

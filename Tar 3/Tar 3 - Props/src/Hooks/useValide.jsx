@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
+
+//custom hook that validate all the user fileds and mange ther state
 export default function useValide(Value2Check) {
 
 
@@ -6,17 +8,6 @@ export default function useValide(Value2Check) {
   const [text, setText] = useState("");
   const [value, setValue] = useState("")
 
-
-  // const [email, setEmail] = useState({
-  //   value: "",
-  //   valid: true,
-  //   message: 'Insert valid email'
-  // });
-  // const [password, setPassword] = useState({
-  //   value: "",
-  //   valid: true,
-  //   message: ''
-  // });
 
   const handleUserName = (userNameVal) => {
 
@@ -43,12 +34,61 @@ export default function useValide(Value2Check) {
     !pattern.test(newPassword) && newPassword !== "" ? setErrorsTrue(errorMassege, newPassword) : setErrorsFalse(newPassword);
 
   }
-  const handleName = () => {
-    let pattern = /^[a-zA-Z0-9$@$!%*?&#^-_.+]+$/
+
+  const handleName = (nameVal) => {
+    let pattern = /^[a-zA-Z\u0590-\u05FF]+$/
     let massege = 'User name can contain only latin letters, numbers and special charectors';
 
-    !pattern.test(userNameVal) && userNameVal !== "" ? setErrorsTrue(massege, userNameVal) : setErrorsFalse(userNameVal);
+    !pattern.test(nameVal) && nameVal !== "" ? setErrorsTrue(massege, nameVal) : setErrorsFalse(nameVal);
   }
+
+  const handleImage = (e) => {
+
+    let file = e.currentTarget.files[0]; // 0 = get the first file
+
+
+    let reader = new FileReader();
+
+    reader.onloadend = (eFile) => {
+      setValue(eFile.target.result)
+    }
+
+    reader.readAsDataURL(file)
+
+  }
+
+  const handleDate = (date) => {
+
+    let choosedate = new Date(date)
+
+    let massege = 'Need to be at least 18 years old';
+    console.log('diff_years(choosedate, new Date())', diff_years(new Date(), choosedate))
+
+    diff_years(new Date(), choosedate) < 18 ? setErrorsTrue(massege, date) : setErrorsFalse(date);
+  }
+
+  const handleStreet = (streetVal) => {
+
+    let pattern = /^[\u0590-\u05FF\s]*$/
+    let massege = "Street must contain only hebrew letters";
+
+    !pattern.test(streetVal) && streetVal !== "" ? setErrorsTrue(massege, streetVal) : setErrorsFalse(streetVal);
+
+  }
+
+  const handleHouseNumber = (houseNum) => {
+
+    let massege = `House number can't be less than 0`
+    houseNum < 0 ? setErrorsTrue(massege, houseNum) : setErrorsFalse(houseNum);
+
+  }
+
+  const handleCity = (city) => {
+
+    setValue(city);
+
+  }
+
 
 
 
@@ -69,16 +109,26 @@ export default function useValide(Value2Check) {
     'userName': handleUserName,
     'email': handleEmail,
     'password': handlePassword,
-    // 'image': handleImage,
-    // 'name': handleName,
-    // 'date': handleDate,
-    // 'street': handleStreet,
-    // 'houseNumber': handleHouseNumber
+    'image': handleImage,
+    'name': handleName,
+    'city': handleCity,
+    'date': handleDate,
+    'street': handleStreet,
+    'houseNumber': handleHouseNumber
   }
 
 
   // const [first, setfirst] = useState(second)
   return [value, error, text, handleFunctions[Value2Check]];
 
+
+}
+
+
+const diff_years = (dt2, dt1) => {
+
+  var diff = (dt2.getTime() - dt1.getTime()) / 1000;
+  diff /= (60 * 60 * 24);
+  return diff / 365.25;
 
 }
