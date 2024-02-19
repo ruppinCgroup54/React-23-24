@@ -20,17 +20,17 @@ export default function Profile() {
     <Grid container sx={{ width: '100%', maxWidth: 700 }} component={Paper} elevation={6} flexDirection='row-reverse'>
 
       <Grid item xs={12} md={6}  >
-        <img src={Image} width={'100%'} style={{ maxWidth: 300, maxHeight: 300 }} />
+        <img src={Image} width={'100%'} style={{ maxWidth: 500, maxHeight: 500, display: 'block' }} />
       </Grid>
 
       <Grid item xs={12} md={6} my={2}   >
         <Stack spacing={3} px={2} direction="column"
           justifyContent="flex-end"
           alignItems="flex-end"
-          divider={<Divider flexItem/>}>
+          divider={<Divider flexItem />}>
           <Typography my={1} variant="h3" noWrap>{tempUser.firstName + " " + tempUser.lastName}</Typography>
 
-          
+
           <Stack direction="row-reverse"
             justifyContent="flex-start"
             alignItems="center"
@@ -49,7 +49,7 @@ export default function Profile() {
           </Stack>
 
 
-          <ButtonGroup variant="contained"  spacing={2} >
+          <ButtonGroup variant="contained" spacing={2} >
             <Button color="error" >Log out</Button>
             <Button >Game</Button>
             <Button color="secondary"  >Edit user</Button>
