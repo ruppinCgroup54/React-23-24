@@ -25,7 +25,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {screens.map(s => s)}
+      <Profile />
     </BrowserRouter>
   )
 }
