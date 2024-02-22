@@ -13,7 +13,7 @@ import PasswordTextField from './PasswordTextField';
 import { allCities } from '../assets/cities';
 import Modal from './TransitionsModal';
 import TransitionsModal from './TransitionsModal';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 
 
@@ -37,7 +37,7 @@ export default function Register() {
 
   const [openModal, setOpenModal] = useState(false);
 
-
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     let newUser = {
@@ -75,6 +75,8 @@ export default function Register() {
         //if the user mange to register we activet sign-in function
         //need to import sign in function
         sessionStorage.setItem('currentUser', user);
+
+        navigate('profile', { state: { currentUser: user } })
 
       }
       else {
@@ -269,7 +271,7 @@ export default function Register() {
 
               </Grid>
               <Link to='/profile' className="w-100">
-                <Button type='submit' variant="contained" sx={{ my: 3, mx: 'auto'}} >
+                <Button type='submit' variant="contained" sx={{ my: 3, mx: 'auto' }} >
                   Register
                 </Button>
               </Link>

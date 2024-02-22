@@ -2,7 +2,7 @@ import { Avatar, Box, Button, ButtonGroup, Divider, Grid, Paper, Stack, Typograp
 import Image from '../images/users.jpg';
 import CakeIcon from '@mui/icons-material/Cake';
 import EmailIcon from '@mui/icons-material/Email';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Profile() {
   // let tempUser = {
