@@ -7,9 +7,6 @@ import { useTheme } from '@emotion/react';
 
 export default function ToggleMode({ setMode }) {
 
-
-
-
   return (
     <ToggleButtonGroup
       // value={mode}

@@ -13,6 +13,7 @@ import PasswordTextField from './PasswordTextField';
 import { allCities } from '../assets/cities';
 import Modal from './TransitionsModal';
 import TransitionsModal from './TransitionsModal';
+import { Link } from 'react-router-dom';
 
 
 
@@ -267,14 +268,16 @@ export default function Register() {
 
 
               </Grid>
-              <Button type='submit' variant="contained" sx={{ my: 3, mx: 'auto' }} >
-                Register
-              </Button>
+              <Link to='/profile' className="w-100">
+                <Button type='submit' variant="contained" sx={{ my: 3, mx: 'auto'}} >
+                  Register
+                </Button>
+              </Link>
             </Grid>
           </Box>
         </Paper>
       </Container>
-      <TransitionsModal toggle={{openModal,setOpenModal}}  text={'User already exists'} />
+      <TransitionsModal toggle={{ openModal, setOpenModal }} text={'User already exists'} />
     </>
   );
 }

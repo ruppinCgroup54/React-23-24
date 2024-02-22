@@ -2,6 +2,7 @@ import { Avatar, Box, Button, ButtonGroup, Divider, Grid, Paper, Stack, Typograp
 import Image from '../images/users.jpg';
 import CakeIcon from '@mui/icons-material/Cake';
 import EmailIcon from '@mui/icons-material/Email';
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   let tempUser = {
@@ -50,7 +51,7 @@ export default function Profile() {
 
 
           <ButtonGroup variant="contained" spacing={2} >
-            <Button color="error" >Log out</Button>
+            <Link to='/'><Button color="error">Log out</Button></Link>
             <Button >Game</Button>
             <Button color="secondary"  >Edit user</Button>
           </ButtonGroup>

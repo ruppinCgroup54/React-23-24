@@ -1,4 +1,4 @@
-import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid, Typography } from '@mui/material';
+import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Paper, Box, Grid, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 
@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import useValide from '../Hooks/useValide';
 import PasswordTextField from './PasswordTextField';
 
+import { Link } from 'react-router-dom';
 
 export default function Login() {
 
@@ -103,6 +104,7 @@ export default function Login() {
               label="Remember me"
               onChange={(e) => setRemember(e.target.checked)}
             />
+            <Link to="/profile">
             <Button
               type="submit"
               fullWidth
@@ -111,6 +113,7 @@ export default function Login() {
             >
               Sign In
             </Button>
+            </Link>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -118,7 +121,7 @@ export default function Login() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to="/register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
