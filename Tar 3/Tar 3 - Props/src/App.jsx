@@ -11,6 +11,7 @@ import Register from './Components/Register'
 import Profile from './Components/Profile'
 import { lime, purple } from '@mui/material/colors'
 import ToggleMode from './Components/ToggleMode'
+import SystemAdmin from './Components/SystemAdmin'
 
 
 
@@ -39,7 +40,9 @@ function App() {
   const screens = [<Login key={0} />, <Register key={1} />, <Profile key={2} />]
 
   return (
+    
     <ThemeProvider theme={theme}>
+      <SystemAdmin></SystemAdmin>
       <CssBaseline />
       <ToggleMode setMode={setMode} />
       <Routes>
