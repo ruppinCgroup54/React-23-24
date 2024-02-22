@@ -34,9 +34,6 @@ export default function UserDetailsForm({ sendData }) {
     }
   }, [])
 
-
-
-
   return (
 
     <Grid container spacing={3}>

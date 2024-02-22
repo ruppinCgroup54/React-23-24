@@ -4,23 +4,36 @@ import CakeIcon from '@mui/icons-material/Cake';
 import EmailIcon from '@mui/icons-material/Email';
 
 export default function Profile() {
-  let tempUser = {
-    city: "‘Ein Qunīya",
-    dateOB: "2000-01-31",
-    email: "benshuan@gmail.com",
-    firstName: "בן",
-    house: "5",
-    image: '../images/users.jpg',
-    lastName: "שואן",
-    street: "באמ",
-    userName: "benShuan",
-  }
+  // let tempUser = {
+  //   city: "‘Ein Qunīya",
+  //   dateOB: "2000-01-31",
+  //   email: "benshuan@gmail.com",
+  //   firstName: "בן",
+  //   house: "5",
+  //   image: '../images/users.jpg',
+  //   lastName: "שואן",
+  //   street: "באמ",
+  //   userName: "benShuan",
+  // }
+
+
+  const { state } = useLocation();
+
+  let currenUser = state.currentUser;
+
 
   return (
     <Grid container sx={{ width: '100%', maxWidth: 700 }} component={Paper} elevation={6} flexDirection='row-reverse'>
 
-      <Grid item xs={12} md={6}  >
-        <img src={Image} width={'100%'} style={{ maxWidth: 500, maxHeight: 500, display: 'block' }} />
+      <Grid item xs={12} md={6} sx={{
+        minHeight: 300,
+        backgroundImage: `url(${currenUser?.image})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: (t) =>
+          t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }} >
       </Grid>
 
       <Grid item xs={12} md={6} my={2}   >
@@ -28,38 +41,38 @@ export default function Profile() {
           justifyContent="flex-end"
           alignItems="flex-end"
           divider={<Divider flexItem />}>
-          <Typography my={1} variant="h3" noWrap>{tempUser.firstName + " " + tempUser.lastName}</Typography>
-
-
-          <Stack direction="row-reverse"
-            justifyContent="flex-start"
-            alignItems="center"
-            spacing={2}
-          >
-            <EmailIcon></EmailIcon>
-            <Typography variant="p" noWrap> {tempUser.email}</Typography>
-          </Stack>
-          <Stack direction="row-reverse"
-            justifyContent="flex-start"
-            alignItems="center"
-            spacing={1}
-          >
+          <Typography my={1} variant="h3" noWrap>{currenUser.firstName + " " + currenUser.lastName}</Typography>
+          {/* user name */}
+          <Stack>
+            <Typography variant="p" noWrap>{currenUser.userName}</Typography>
             <CakeIcon></CakeIcon>
-            <Typography my={1} variant="p" noWrap>{tempUser.dateOB}</Typography>
+          </Stack>
+          {/* email */}
+          <Stack>
+            <Typography variant="p" noWrap> {currenUser.email}</Typography>
+            <EmailIcon></EmailIcon>
+
+          </Stack>
+          {/* birth day */}
+          <Stack>
+            <Typography variant="p" noWrap>{currenUser.dateOB}</Typography>
+            <CakeIcon></CakeIcon>
+          </Stack>
+          {/* address */}
+          <Stack>
+            <Typography variant="p" noWrap>{`${currenUser.city}, ${currenUser.street}, ${currenUser.house}`}</Typography>
+            <CakeIcon></CakeIcon>
           </Stack>
 
-
-          <ButtonGroup variant="contained" spacing={2} >
+          <ButtonGroup variant="contained"  >
             <Button color="error" >Log out</Button>
-            <Button >Game</Button>
-            <Button color="secondary"  >Edit user</Button>
+            <Button color="secondary" >Game</Button>
+            <Button  >Edit user</Button>
           </ButtonGroup>
+
         </Stack>
 
       </Grid>
-
-
-
 
     </Grid >
   )
