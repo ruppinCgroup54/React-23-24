@@ -1,11 +1,10 @@
 
 import { useState } from 'react'
 
-
 import './App.css'
 
 import { Button, CssBaseline, ThemeProvider, ToggleButton, createTheme } from '@mui/material'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import Login from './Components/Login'
 import Register from './Components/Register'
@@ -42,10 +41,13 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
-        <ToggleMode setMode={setMode} />
-        <Profile />
-      </BrowserRouter>
+      <ToggleMode setMode={setMode} />
+      <Routes>
+        <Route path='/' element={<Login/>}></Route>
+        <Route path='/profile' element={<Profile />}></Route>
+        <Route path='/register' element={<Register />}></Route>
+        
+      </Routes>
     </ThemeProvider>
   )
 }
