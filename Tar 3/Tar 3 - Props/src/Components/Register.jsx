@@ -30,7 +30,7 @@ export default function Register() {
   const [dateOB, dateError, dateText, setDate] = useValide('date');
   const [city, cityError, , setCity] = useValide('city');
   const [street, streetError, streetText, setStreet] = useValide('street');
-  const [house, houseError, houseText, setHouse] = useValide('houseNumber');
+  const [houseNumber, houseError, houseText, setHouse] = useValide('houseNumber');
   const [userName, userNameError, userNameText, setUserName] = useValide('userName');
   const [email, emailError, emailText, setEmail] = useValide('userName');
 
@@ -51,7 +51,8 @@ export default function Register() {
       dateOB,
       city,
       street,
-      house,
+      houseNumber,
+      password,
       userName,
       email
     }
@@ -80,7 +81,7 @@ export default function Register() {
         //need to import sign in function
         sessionStorage.setItem('currentUser',JSON.stringify(user));
 
-        navigate('profile', { state: { currentUser: user } })
+        navigate('profile', { state: user })
 
       }
       else {
@@ -90,7 +91,7 @@ export default function Register() {
     }
     else {
       localStorage.setItem('users', JSON.stringify([user]));
-
+      navigate('/profile', { state: user })
     }
     return true;
   }
@@ -248,7 +249,7 @@ export default function Register() {
                   label='House number'
                   name='houseNumber'
                   inputProps={{ min: 0 }}
-                  value={house}
+                  value={houseNumber}
                   error={houseError}
                   helperText={houseText}
                   onChange={(e) => setHouse(e.currentTarget.value)}
