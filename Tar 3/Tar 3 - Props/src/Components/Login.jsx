@@ -99,7 +99,6 @@ export default function Login() {
               label="User name"
               name="userName"
               autoComplete="userName"
-              autoFocus
               onChange={(e) => setUserName(e.target.value)}
               error={userNameError}
               helperText={userNameText}
@@ -111,6 +110,7 @@ export default function Login() {
               label="Remember me"
               onChange={(e) => setRemember(e.target.checked)}
             />
+            <Link to="/profile">
             <Button
               type="submit"
               fullWidth
@@ -119,6 +119,7 @@ export default function Login() {
             >
               Sign In
             </Button>
+            </Link>
             <Grid container>
               {/* <Grid item xs>
                 <Link href="#" variant="body2">
