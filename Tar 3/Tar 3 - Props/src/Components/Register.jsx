@@ -84,7 +84,7 @@ export default function Register() {
       //need to import sign in function
       sessionStorage.setItem('currentUser', JSON.stringify(user));
 
-      navigate('profile', { state: user })
+      navigate('/profile', { state: user })
 
     }
     else {

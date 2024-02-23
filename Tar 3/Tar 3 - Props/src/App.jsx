@@ -25,8 +25,8 @@ function App() {
     components: {
       MuiStack: {
         defaultProps: {
-          direction: "row",
-          justifyContent: "flex-end",
+          direction: "row-reverse",
+          justifyContent: "flex-start",
           alignItems: "center",
           spacing: 2
         }
@@ -63,7 +63,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <ToggleMode setMode={setMode} />
-      <div style={{ marginTop: 15 }}>
+      <div style={{ marginTop: 30 }}>
         <Routes>
           <Route path='/' element={<Login />}></Route>
           <Route path='/profile' element={<Profile />}></Route>

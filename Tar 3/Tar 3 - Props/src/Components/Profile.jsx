@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, ButtonGroup, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Button, ButtonGroup, Divider, Grid, Paper, Stack, Typography, useMediaQuery } from "@mui/material";
 import Image from '../images/users.jpg';
 import PersonIcon from '@mui/icons-material/Person';
 import HomeIcon from '@mui/icons-material/Home';
@@ -15,6 +15,7 @@ export default function Profile() {
 
   const navigate = useNavigate();
 
+  const isSmallScreen = useMediaQuery('(min-width:600px)');
 
   const removeUser = () => {
     sessionStorage.removeItem('currentUser');
@@ -22,7 +23,7 @@ export default function Profile() {
   }
 
   return (
-    <Grid container sx={{ width: '70vw', maxWidth: 700 }} component={Paper} elevation={10} flexDirection='row-reverse'>
+    <Grid container sx={{ width: '100vw', maxWidth: 700 }} component={Paper} elevation={10} flexDirection='row'>
 
       <Grid item xs={12} md={6} sx={{
         minHeight: 300,
@@ -32,15 +33,16 @@ export default function Profile() {
           t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+
       }} >
       </Grid>
 
       <Grid item xs={12} md={6} my={2}   >
         <Stack spacing={3} px={2} direction="column"
           justifyContent="flex-end"
-          alignItems="flex-end"
+          alignItems="flex-start"
           divider={<Divider flexItem />}>
-          <Typography my={1} variant="h3" >{currenUser.firstName + " " + currenUser.lastName}</Typography>
+          <Typography variant="h4" sx={{ fontWeight: 'bold' }} >{currenUser.firstName + " " + currenUser.lastName}</Typography>
           {/* user name */}
           <Stack>
             <Typography variant="p" >{currenUser.userName}</Typography>
@@ -64,10 +66,10 @@ export default function Profile() {
           </Stack>
 
 
-          <ButtonGroup variant="contained" spacing={2}  >
-            <Button onClick={removeUser} color="error">Log out</Button>
+          <ButtonGroup variant="text" orientation={isSmallScreen ? "horizontal" : "vertical"} fullWidth spacing={2}  >
+            <Button   >Edit user</Button>
             <Button target="_blank" href="https://gold-miner-games.com/classic-gold-miner.htm" >Game</Button>
-            <Button color="secondary"  >Edit user</Button>
+            <Button onClick={removeUser} color="error">Log out</Button>
           </ButtonGroup>
 
         </Stack>
