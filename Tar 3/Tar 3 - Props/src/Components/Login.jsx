@@ -10,20 +10,29 @@ import PasswordTextField from './PasswordTextField';
 
 import { Link, useNavigate } from 'react-router-dom';
 
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
 export default function Login() {
 
   const [userNameValue, userNameError, userNameText, setUserName] = useValide('userName');
 
   const [remember, setRemember] = useState(false);
 
-  let rememberUser = JSON.parse(localStorage.getItem('last user'));
+  const [initialValue, setInitialValue] = useState("");
+
+  // const ver='top';
+  // const hor='left';
 
   const navigate = useNavigate();
+
+  const [openAlert, setoOpenAlert] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem('last user') !== null) {
       let lastUser = JSON.parse(localStorage.getItem('last user'));
       setUserName(lastUser['userName']);
+      setInitialValue(lastUser['password']);
     }
   }, [])
 
@@ -40,20 +49,24 @@ export default function Login() {
   };
 
   const loginUser = (user) => {
-    let usersFromLocal = JSON.parse(localStorage.getItem("users"));
-    let exist = usersFromLocal.find(userLC => userLC['userName'] === user.userName && userLC['password'] === user.password);
-    if (exist!=undefined) {
-      sessionStorage.setItem("currentUser", JSON.stringify(exist));
-      if (remember) {
-        localStorage.setItem('last user', JSON.stringify(exist))
+    if (user.userName == "admin" && user.password == "ad12343211ad") {
+      navigate('/systemAdmin');
+    }
+    else {
+      let usersFromLocal = JSON.parse(localStorage.getItem("users"));
+      let exist = usersFromLocal.find(userLC => userLC['userName'] === user.userName && userLC['password'] === user.password);
+      if (exist != undefined) {
+        sessionStorage.setItem("currentUser", JSON.stringify(exist));
+        if (remember) {
+          localStorage.setItem('last user', JSON.stringify(exist))
+        }
+        navigate('/profile', { state: exist })
       }
-      if (exist.userName=="admin" && exist.password=="ad12343211ad") {
-        navigate('/systemAdmin');
-      }
-      else{
-        navigate('/profile', {state: exist})
+      else {
+        setoOpenAlert(true);
       }
     }
+
   };
 
 
@@ -104,12 +117,21 @@ export default function Login() {
               helperText={userNameText}
               value={userNameValue}
             />
-            <PasswordTextField></PasswordTextField>
+            <PasswordTextField initialValue={initialValue}></PasswordTextField>
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" checked={remember} />}
               label="Remember me"
               onChange={(e) => setRemember(e.target.checked)}
             />
+            <Snackbar open={openAlert} autoHideDuration={3000}
+             anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }} >
+              <Alert variant="outlined" severity="error">
+                User is not found. please register.
+              </Alert>
+            </Snackbar>
             <Button
               type="submit"
               fullWidth
