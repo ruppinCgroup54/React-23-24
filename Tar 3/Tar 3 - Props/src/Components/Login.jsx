@@ -110,7 +110,6 @@ export default function Login() {
               label="Remember me"
               onChange={(e) => setRemember(e.target.checked)}
             />
-            <Link to="/profile">
             <Button
               type="submit"
               fullWidth
@@ -119,7 +118,6 @@ export default function Login() {
             >
               Sign In
             </Button>
-            </Link>
             <Grid container>
               {/* <Grid item xs>
                 <Link href="#" variant="body2">

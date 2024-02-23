@@ -22,11 +22,17 @@ function App() {
 
 
   const theme = createTheme({
-    // components:{
-    //   MuiStack:{
+    components: {
+      MuiStack: {
+        defaultProps: {
+          direction: "row",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          spacing: 2
+        }
 
-    //   }
-    // }
+      }
+    },
     palette: {
       mode,
       primary: {
@@ -34,14 +40,14 @@ function App() {
         light: red[600],
         dark: red[100],
       },
-      secondary:{
+      secondary: {
         main: orange[300],
         light: orange[600],
         dark: orange[100],
       },
     },
   });
-  
+
 
   const chngScreen = () => {
 
@@ -53,18 +59,19 @@ function App() {
   const screens = [<Login key={0} />, <Register key={1} />, <Profile key={2} />]
 
   return (
-    
+
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <ToggleMode setMode={setMode} />
-      <Routes>
-        <Route path='/' element={<Login/>}></Route>
-        <Route path='/profile' element={<Profile />}></Route>
-        <Route path='/register' element={<Register />}></Route>
-        <Route path='/register/:email' element={<Register />}></Route>
-        <Route path='/systemAdmin' element={<Register />}></Route>
-        
-      </Routes>
+      <div style={{ marginTop: 15 }}>
+        <Routes>
+          <Route path='/' element={<Login />}></Route>
+          <Route path='/profile' element={<Profile />}></Route>
+          <Route path='/register' element={<Register />}></Route>
+          <Route path='/register/:email' element={<Register />}></Route>
+          <Route path='/systemAdmin' element={<Register />}></Route>
+        </Routes>
+      </div>
     </ThemeProvider>
   )
 }

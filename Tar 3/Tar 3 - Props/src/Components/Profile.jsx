@@ -1,29 +1,28 @@
 import { Avatar, Box, Button, ButtonGroup, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import Image from '../images/users.jpg';
+import PersonIcon from '@mui/icons-material/Person';
+import HomeIcon from '@mui/icons-material/Home';
 import CakeIcon from '@mui/icons-material/Cake';
 import EmailIcon from '@mui/icons-material/Email';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Remove } from "@mui/icons-material";
 
 export default function Profile() {
-  // let currenUser = {
-  //   city: "‘Ein Qunīya",
-  //   dateOB: "2000-01-31",
-  //   email: "benshuan@gmail.com",
-  //   firstName: "בן",
-  //   house: "5",
-  //   image: '../images/users.jpg',
-  //   lastName: "שואן",
-  //   street: "באמ",
-  //   userName: "benShuan",
-  // }
-
 
   const { state } = useLocation();
 
   let currenUser = state;
 
+  const navigate = useNavigate();
+
+
+  const removeUser = () => {
+    sessionStorage.removeItem('currentUser');
+    navigate('/');
+  }
+
   return (
-    <Grid container sx={{ width: '100%', maxWidth: 700 }} component={Paper} elevation={6} flexDirection='row-reverse'>
+    <Grid container sx={{ width: '70vw', maxWidth: 700 }} component={Paper} elevation={10} flexDirection='row-reverse'>
 
       <Grid item xs={12} md={6} sx={{
         minHeight: 300,
@@ -32,7 +31,7 @@ export default function Profile() {
         backgroundColor: (t) =>
           t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
         backgroundSize: 'cover',
-        backgroundPosition: 'center'
+        backgroundPosition: 'center',
       }} >
       </Grid>
 
@@ -41,33 +40,33 @@ export default function Profile() {
           justifyContent="flex-end"
           alignItems="flex-end"
           divider={<Divider flexItem />}>
-          <Typography my={1} variant="h3" noWrap>{currenUser.firstName + " " + currenUser.lastName}</Typography>
+          <Typography my={1} variant="h3" >{currenUser.firstName + " " + currenUser.lastName}</Typography>
           {/* user name */}
           <Stack>
-            <Typography variant="p" noWrap>{currenUser.userName}</Typography>
-            <CakeIcon></CakeIcon>
+            <Typography variant="p" >{currenUser.userName}</Typography>
+            <PersonIcon ></PersonIcon>
           </Stack>
           {/* email */}
-          <Stack>
-            <Typography variant="p" noWrap> {currenUser.email}</Typography>
+          <Stack >
+            <Typography variant="p" > {currenUser.email}</Typography>
             <EmailIcon></EmailIcon>
 
           </Stack>
           {/* birth day */}
           <Stack>
-            <Typography variant="p" noWrap>{currenUser.dateOB}</Typography>
+            <Typography variant="p" >{currenUser.dateOB}</Typography>
             <CakeIcon></CakeIcon>
           </Stack>
           {/* address */}
           <Stack>
-            <Typography variant="p" noWrap>{`${currenUser.city}, ${currenUser.street}, ${currenUser.house}`}</Typography>
-            <CakeIcon></CakeIcon>
+            <Typography variant="p" >{`${currenUser.city}, ${currenUser.street}, ${currenUser.houseNumber}`}</Typography>
+            <HomeIcon></HomeIcon>
           </Stack>
 
 
-          <ButtonGroup variant="contained" spacing={2} >
-            <Link to='/'><Button color="error">Log out</Button></Link>
-            <Button >Game</Button>
+          <ButtonGroup variant="contained" spacing={2}  >
+            <Button onClick={removeUser} color="error">Log out</Button>
+            <Button target="_blank" href="https://gold-miner-games.com/classic-gold-miner.htm" >Game</Button>
             <Button color="secondary"  >Edit user</Button>
           </ButtonGroup>
 
