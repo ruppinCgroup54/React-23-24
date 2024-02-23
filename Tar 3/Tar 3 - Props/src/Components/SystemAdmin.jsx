@@ -28,7 +28,7 @@ export default function SystemAdmin() {
     const [rows, setRows] = useState([]);
 
     useEffect(() => {
-      setRows(JSON.parse(localStorage.getItem('users')));
+      // setRows(JSON.parse(localStorage.getItem('users')));
     
     //   return () => {
     //     second

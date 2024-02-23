@@ -20,7 +20,7 @@ export default function Login() {
 
   useEffect(() => {
     let lastUser = JSON.parse(localStorage.getItem('last user'));
-    let rememberUser = lastUser == null ? {userName: "", password: ""} : lastUser;
+    let rememberUser = lastUser == null ? { userName: "", password: "" } : lastUser;
     setUserName(rememberUser['userName']);
   }, [])
 
@@ -92,7 +92,6 @@ export default function Login() {
               label="User name"
               name="userName"
               autoComplete="userName"
-              autoFocus
               onChange={(e) => setUserName(e.target.value)}
               error={userNameError}
               helperText={userNameText}
@@ -105,14 +104,14 @@ export default function Login() {
               onChange={(e) => setRemember(e.target.checked)}
             />
             <Link to="/profile">
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
             </Link>
             <Grid container>
               <Grid item xs>

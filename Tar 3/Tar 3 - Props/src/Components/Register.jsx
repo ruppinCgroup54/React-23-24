@@ -1,12 +1,12 @@
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Autocomplete, Grid, TextField } from '@mui/material';
+import { Autocomplete, FilledInput, Grid, TextField } from '@mui/material';
 
 import useValide from '../Hooks/useValide';
 import PasswordTextField from './PasswordTextField';
@@ -20,27 +20,31 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 export default function Register() {
 
+  const formRef = useRef();
+
   //using custom hook of text filed for validation handling 
 
   const [firstName, firstNameError, firstNameText, setFirstName] = useValide('name');
   const [lastName, lastNameError, lastNameText, setLastName] = useValide('name');
   const [image, imageError, imageText, setImage] = useValide('image');
   const [dateOB, dateError, dateText, setDate] = useValide('date');
-  const [city, , , setCity] = useValide('city');
+  const [city, cityError, , setCity] = useValide('city');
   const [street, streetError, streetText, setStreet] = useValide('street');
   const [house, houseError, houseText, setHouse] = useValide('houseNumber');
   const [userName, userNameError, userNameText, setUserName] = useValide('userName');
   const [email, emailError, emailText, setEmail] = useValide('userName');
 
-  const [password, setPassword] = useState("");
-  const [passwordConf, setPasswordConf] = useState(false);
+
+  // handle password confirm
 
   const [openModal, setOpenModal] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
+
     let newUser = {
+      password: new FormData(formRef.current).get('password'),
       firstName,
       lastName,
       image,
@@ -74,7 +78,7 @@ export default function Register() {
 
         //if the user mange to register we activet sign-in function
         //need to import sign in function
-        sessionStorage.setItem('currentUser', user);
+        sessionStorage.setItem('currentUser',JSON.stringify(user));
 
         navigate('profile', { state: { currentUser: user } })
 
@@ -99,17 +103,13 @@ export default function Register() {
           <Typography component="h1" variant="h4" align="center" mb={2}>
             Registertion form
           </Typography>
-          <Box component='form' onSubmit={handleSubmit} >
+          <Box component='form' onSubmit={handleSubmit} ref={formRef} >
             <Grid container spacing={3} >
               {/* User name */}
               <Grid item xs={12}>
-                <TextField required
-                  type='text'
-                  id="userName"
-                  name="userName"
-                  label="User name"
-                  fullWidth
-                  autoComplete="username"
+
+                <TextField required fullWidth
+                  autoComplete='username' type='text' id="userName" name="userName" label="User name"
                   error={userNameError}
                   helperText={userNameText}
                   onChange={(e) => setUserName(e.currentTarget.value)}
@@ -118,42 +118,24 @@ export default function Register() {
 
               {/* Email */}
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  required
-                  type='email'
-                  id="email"
-                  name="email"
-                  label="Enter your email"
-                  autoComplete="email"
+                <TextField fullWidth required
+                  autoComplete="email" type='email' id="email" name="email" label="Enter your email"
                   error={emailError}
                   helperText={emailText}
                   onChange={(e) => setEmail(e.currentTarget.value)}
+                  
                 />
 
               </Grid>
 
               {/* Password */}
               <Grid item xs={12} sm={6}>
-                <PasswordTextField sendPass={setPassword} />
+                <PasswordTextField />
               </Grid>
 
               {/* Password confirm */}
               <Grid item xs={12} sm={6}>
-
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password confirm"
-                  type='password'
-                  autoComplete="current-password"
-                  onChange={(e) => { setPasswordConf(e.target.value !== password) }}
-                  error={passwordConf}
-                  helperText={passwordConf && "Password dosen't match"}
-                />
-
+                <PasswordTextField isConfirm={true} formToCheck={formRef} />
               </Grid>
               {/* First name */}
               <Grid item xs={12} sm={6}>
@@ -193,7 +175,7 @@ export default function Register() {
                   fullWidth required
                   type='file'
                   id='file'
-                  name='file'
+                  name='image'
                   label='Image'
                   inputProps={{
                     accept: "image/jpg, image/jpeg"
@@ -214,7 +196,7 @@ export default function Register() {
                   required fullWidth
                   type='date'
                   id='DateOB'
-                  name='DateOB'
+                  name='dateOB'
                   label='Date of birth'
                   InputLabelProps={{
                     shrink: true,
@@ -230,9 +212,11 @@ export default function Register() {
               {/* city  */}
               <Grid item xs={12} md={4}>
                 <Autocomplete
+                  autoComplete={false}
                   fullWidth
                   required
                   id="city"
+                  name='city'
                   options={allCities.sort((a, b) => -b.name[0].localeCompare(a.name[0]))}
                   groupBy={(option) => option.name[0]}
                   getOptionLabel={(option) => option.name}
@@ -248,6 +232,7 @@ export default function Register() {
                   required
                   id="street"
                   label="Street"
+                  name='street'
                   fullWidth
                   autoComplete="street-address"
                   value={street}
@@ -261,6 +246,7 @@ export default function Register() {
               <Grid item xs={12} md={4} >
                 <TextField required fullWidth type='number'
                   label='House number'
+                  name='houseNumber'
                   inputProps={{ min: 0 }}
                   value={house}
                   error={houseError}
@@ -270,11 +256,9 @@ export default function Register() {
 
 
               </Grid>
-              <Link to='/profile' className="w-100">
-                <Button type='submit' variant="contained" sx={{ my: 3, mx: 'auto' }} >
-                  Register
-                </Button>
-              </Link>
+              <Button type='submit' variant="contained" sx={{ my: 3, mx: 'auto' }} >
+                Register
+              </Button>
             </Grid>
           </Box>
         </Paper>
