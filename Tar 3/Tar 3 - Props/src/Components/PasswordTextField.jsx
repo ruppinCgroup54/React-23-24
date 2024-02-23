@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import useValide from "../Hooks/useValide";
 
 export default function PasswordTextField({ formToCheck, isConfirm = false, initialValue }) {
-//console.log(initialValue);
+  //console.log(initialValue);
 
   const [passValue, passError, passText, setPass] = useValide('password');
 
@@ -44,7 +44,6 @@ export default function PasswordTextField({ formToCheck, isConfirm = false, init
       name={isConfirm ? 'password confirm' : "password"}
       label={isConfirm ? 'Password confirm' : "Password"}
       type={eye ? "password" : "text"}
-      autoComplete="current-password"
       value={passValue}
       onChange={handleConfirm}
       error={passError || !confirm}

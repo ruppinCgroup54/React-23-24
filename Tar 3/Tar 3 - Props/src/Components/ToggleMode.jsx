@@ -13,7 +13,7 @@ export default function ToggleMode({ setMode }) {
       exclusive
       onChange={(e, val) => setMode(val)}
       aria-label="color mode"
-      sx={{ position: 'absolute', top: 10, right: 10 }}
+      sx={{ position: 'fixed', top: 10, right: '10vw' }}
     >
       <ToggleButton value="dark" aria-label="dark mode">
         <DarkModeIcon />

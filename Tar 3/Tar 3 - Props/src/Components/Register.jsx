@@ -34,6 +34,7 @@ export default function Register() {
   const [userName, userNameError, userNameText, setUserName] = useValide('userName');
   const [email, emailError, emailText, setEmail] = useValide('userName');
 
+  const validToSubmit = firstNameError || lastNameError || imageError || dateError || cityError || streetError || houseError || userNameError || emailError;
 
   // handle password confirm
 
@@ -42,6 +43,9 @@ export default function Register() {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
+
+    e.stopPropagation();
+    e.preventDefault();
 
     let newUser = {
       password: new FormData(formRef.current).get('password'),
@@ -52,7 +56,6 @@ export default function Register() {
       city,
       street,
       houseNumber,
-      password,
       userName,
       email
     }
@@ -60,39 +63,36 @@ export default function Register() {
     //if register return false show modal of fail
     setOpenModal(!RegisterUser(newUser));
 
-    e.stopPropagation();
-    e.preventDefault();
+
 
   }
 
   const RegisterUser = (user) => {
 
-    //check is users existss
-    if (localStorage.getItem('users') !== null) {
+    //check if users existss
 
-      let tempUsers = JSON.parse(localStorage.getItem('users'));
+    let tempUsers = JSON.parse(localStorage.getItem('users')) !== null ?
+      JSON.parse(localStorage.getItem('users')) :
+      [];
 
-      //check if the current user isn't exists
-      if (!tempUsers.find(u => u.userName == user.userName || u.email == user.email)) {
-        tempUsers = [...tempUsers, user]
-        localStorage.setItem('users', JSON.stringify(tempUsers));
+    //check if the current user isn't exists
+    if (!tempUsers.find(u => u.userName == user.userName || u.email == user.email)) {
+      tempUsers = [...tempUsers, user]
+      localStorage.setItem('users', JSON.stringify(tempUsers));
 
-        //if the user mange to register we activet sign-in function
-        //need to import sign in function
-        sessionStorage.setItem('currentUser',JSON.stringify(user));
+      //if the user mange to register we activet sign-in function
+      //need to import sign in function
+      sessionStorage.setItem('currentUser', JSON.stringify(user));
 
-        navigate('profile', { state: user })
+      navigate('/profile', { state: user })
 
-      }
-      else {
-        console.log('User allready exists')
-        return false;
-      }
     }
     else {
-      localStorage.setItem('users', JSON.stringify([user]));
-      navigate('/profile', { state: user })
+      console.log('User allready exists')
+      return false;
     }
+
+
     return true;
   }
 
@@ -124,7 +124,7 @@ export default function Register() {
                   error={emailError}
                   helperText={emailText}
                   onChange={(e) => setEmail(e.currentTarget.value)}
-                  
+
                 />
 
               </Grid>
@@ -257,7 +257,7 @@ export default function Register() {
 
 
               </Grid>
-              <Button type='submit' variant="contained" sx={{ my: 3, mx: 'auto' }} >
+              <Button type='submit' disabled={validToSubmit} variant="contained" sx={{ my: 3, mx: 'auto' }} >
                 Register
               </Button>
             </Grid>
