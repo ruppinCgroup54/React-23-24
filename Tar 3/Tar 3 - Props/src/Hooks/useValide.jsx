@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-//custom hook that validate all the user fileds and mange ther state
+//custom hook that validate all the user fileds and mange their state
 export default function useValide(Value2Check) {
 
 

@@ -62,7 +62,7 @@ function App() {
         <Route path='/profile' element={<Profile />}></Route>
         <Route path='/register' element={<Register />}></Route>
         <Route path='/register/:email' element={<Register />}></Route>
-        <Route path='/systemAdmin' element={<Register />}></Route>
+        <Route path='/systemAdmin' element={<SystemAdmin />}></Route>
         
       </Routes>
     </ThemeProvider>

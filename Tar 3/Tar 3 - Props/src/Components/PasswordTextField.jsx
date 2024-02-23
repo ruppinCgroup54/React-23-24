@@ -8,29 +8,26 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useEffect, useState } from "react";
 import useValide from "../Hooks/useValide";
 
-export default function PasswordTextField({ formToCheck, isConfirm =false }) {
+export default function PasswordTextField({ formToCheck, isConfirm = false, initialValue }) {
+//console.log(initialValue);
 
   const [passValue, passError, passText, setPass] = useValide('password');
 
   const [confirm, setConfirm] = useState(true);
 
-
   useEffect(() => {
-    let lastUser = JSON.parse(localStorage.getItem('last user'));
-    let rememberUser = lastUser == null ? { userName: "", password: "" } : lastUser;
-    setPass(rememberUser['password']);
-  }, [])
+    console.log(initialValue);
+    if (initialValue != "") {
+      setPass(initialValue);
+    }
+  }, [initialValue])
 
   const handleConfirm = (e) => {
-
     setPass(e.target.value);
 
-
     if (isConfirm) {
-    let password = new FormData(formToCheck.current).get('password');
-
+      let password = new FormData(formToCheck.current).get('password');
       setConfirm(e.target.value === password);
-
     }
   }
 
