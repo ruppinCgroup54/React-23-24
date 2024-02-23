@@ -52,7 +52,7 @@ export default function Login() {
       }
       else{
         navigate('/profile', {state: exist})
-      }
+      };
     }
   };
 
