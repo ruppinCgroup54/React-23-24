@@ -62,7 +62,7 @@ export default function SystemAdmin() {
                             <TableCell align="right">{row.dateOB}</TableCell>
                             <TableCell align="right">{row.city + " " + row.street + " " + row.houseNumber}</TableCell>
                             <TableCell align="right">{row.email}</TableCell>
-                            <TableCell align="right"><Link to={`/register/${row.email}`} ><ModeEditIcon></ModeEditIcon></Link></TableCell>
+                            <TableCell align="right"><Link to={"/update/" + row.email} ><ModeEditIcon></ModeEditIcon></Link></TableCell>
                             <TableCell align="right"><ClearIcon></ClearIcon></TableCell>
                         </TableRow>
                     ))}

@@ -12,6 +12,7 @@ import Profile from './Components/Profile'
 import { brown, green, lightGreen, lime, orange, purple, red } from '@mui/material/colors'
 import ToggleMode from './Components/ToggleMode'
 import SystemAdmin from './Components/SystemAdmin'
+import Update from './Components/Update'
 
 
 
@@ -43,15 +44,6 @@ function App() {
   });
   
 
-  const chngScreen = () => {
-
-
-    setscreenToShow(screenToShow === 0 ? 1 : 0);
-
-  }
-
-  const screens = [<Login key={0} />, <Register key={1} />, <Profile key={2} />]
-
   return (
     
     <ThemeProvider theme={theme}>
@@ -61,7 +53,7 @@ function App() {
         <Route path='/' element={<Login/>}></Route>
         <Route path='/profile' element={<Profile />}></Route>
         <Route path='/register' element={<Register />}></Route>
-        <Route path='/register/:email' element={<Register />}></Route>
+        <Route path='/update/:email' element={<Update />}></Route>
         <Route path='/systemAdmin' element={<SystemAdmin />}></Route>
         
       </Routes>

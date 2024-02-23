@@ -26,7 +26,7 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  const [openAlert, setoOpenAlert] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem('last user') !== null) {
@@ -63,10 +63,18 @@ export default function Login() {
         navigate('/profile', { state: exist })
       }
       else {
-        setoOpenAlert(true);
+        setOpenAlert(true);
       }
     }
 
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
   };
 
 
@@ -123,7 +131,7 @@ export default function Login() {
               label="Remember me"
               onChange={(e) => setRemember(e.target.checked)}
             />
-            <Snackbar open={openAlert} autoHideDuration={3000}
+            <Snackbar open={openAlert} autoHideDuration={3000} onClose={handleClose}
              anchorOrigin={{
               vertical: 'top',
               horizontal: 'center',
