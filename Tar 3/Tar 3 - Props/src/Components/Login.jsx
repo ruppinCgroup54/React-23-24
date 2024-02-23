@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import useValide from '../Hooks/useValide';
 import PasswordTextField from './PasswordTextField';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
 
@@ -18,10 +18,13 @@ export default function Login() {
 
   let rememberUser = JSON.parse(localStorage.getItem('last user'));
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    let lastUser = JSON.parse(localStorage.getItem('last user'));
-    let rememberUser = lastUser == null ? {userName: "", password: ""} : lastUser;
-    setUserName(rememberUser['userName']);
+    if (localStorage.getItem('last user') !== null) {
+      let lastUser = JSON.parse(localStorage.getItem('last user'));
+      setUserName(lastUser['userName']);
+    }
   }, [])
 
 
@@ -33,18 +36,22 @@ export default function Login() {
       password: data.get('password'),
     };
     //delete after finish
-    localStorage.setItem("users", JSON.stringify([user]));
     loginUser(user);
-
   };
 
   const loginUser = (user) => {
     let usersFromLocal = JSON.parse(localStorage.getItem("users"));
-    let exist = usersFromLocal.some(user => user['userName'] === user.userName && user['password'] === user.password);
-    if (exist) {
-      sessionStorage.setItem("currentUser", JSON.stringify(user));
+    let exist = usersFromLocal.find(userLC => userLC['userName'] === user.userName && userLC['password'] === user.password);
+    if (exist!=undefined) {
+      sessionStorage.setItem("currentUser", JSON.stringify(exist));
       if (remember) {
-        localStorage.setItem('last user', JSON.stringify(user))
+        localStorage.setItem('last user', JSON.stringify(exist))
+      }
+      if (exist.userName=="admin" && exist.password=="ad12343211ad") {
+        navigate('/systemAdmin');
+      }
+      else{
+        navigate('/profile', {state: exist})
       }
     }
   };
@@ -77,7 +84,7 @@ export default function Login() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -104,7 +111,6 @@ export default function Login() {
               label="Remember me"
               onChange={(e) => setRemember(e.target.checked)}
             />
-            <Link to="/profile">
             <Button
               type="submit"
               fullWidth
@@ -113,13 +119,12 @@ export default function Login() {
             >
               Sign In
             </Button>
-            </Link>
             <Grid container>
-              <Grid item xs>
+              {/* <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
                 </Link>
-              </Grid>
+              </Grid> */}
               <Grid item>
                 <Link to="/register" variant="body2">
                   {"Don't have an account? Sign Up"}

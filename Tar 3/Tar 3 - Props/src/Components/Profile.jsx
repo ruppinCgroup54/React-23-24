@@ -5,7 +5,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import { Link, useLocation } from "react-router-dom";
 
 export default function Profile() {
-  // let tempUser = {
+  // let currenUser = {
   //   city: "‘Ein Qunīya",
   //   dateOB: "2000-01-31",
   //   email: "benshuan@gmail.com",
@@ -20,8 +20,7 @@ export default function Profile() {
 
   const { state } = useLocation();
 
-  let currenUser = state.currentUser;
-
+  let currenUser = state;
 
   return (
     <Grid container sx={{ width: '100%', maxWidth: 700 }} component={Paper} elevation={6} flexDirection='row-reverse'>
