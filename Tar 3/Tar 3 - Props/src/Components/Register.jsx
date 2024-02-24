@@ -65,6 +65,7 @@ export default function Register() {
 
 
 
+
   }
 
   const RegisterUser = (user) => {
@@ -110,7 +111,7 @@ export default function Register() {
               <Grid item xs={12}>
 
                 <TextField required fullWidth
-                  autoComplete='username' type='text' id="userName" name="userName" label="User name" 
+                  autoComplete='username' type='text' id="userName" name="userName" label="User name"
                   error={userNameError}
                   helperText={userNameText}
                   onChange={(e) => setUserName(e.currentTarget.value)}

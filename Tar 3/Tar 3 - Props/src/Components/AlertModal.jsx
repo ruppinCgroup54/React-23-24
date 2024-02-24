@@ -24,7 +24,7 @@ export default function AlertModal({toggle}) {
     <div>
       <Modal
         open={toggle.openModal}
-        onClose={()=> toggle.setOpenModal(false)}//היה צריך לשים פונקציה ולא להפעיל את הsetopen
+        onClose={ toggle.setOpenModal(false)}//היה צריך לשים פונקציה ולא להפעיל את הsetopen
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         
