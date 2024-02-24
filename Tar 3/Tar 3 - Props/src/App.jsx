@@ -60,8 +60,8 @@ function App() {
           <Route path='/' element={<Login />}></Route>
           <Route path='/profile' element={<Profile />}></Route>
           <Route path='/register' element={<Register />}></Route>
-          <Route path='/register/:email' element={<Register />}></Route>
-          <Route path='/systemAdmin' element={<Register />}></Route>
+          <Route path='/update/:email' element={<Update />}></Route>
+          <Route path='/systemAdmin' element={<SystemAdmin />}></Route>
         </Routes>
       </div>
     </ThemeProvider>
