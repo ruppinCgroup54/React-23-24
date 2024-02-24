@@ -43,7 +43,10 @@ export default function useValide(Value2Check) {
   }
 
   const handleImage = (e) => {
-
+    if (typeof e === 'string') {
+      setValue(e);
+      return
+    }
     let file = e.currentTarget.files[0]; // 0 = get the first file
 
 

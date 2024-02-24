@@ -15,6 +15,7 @@ import Modal from './TransitionsModal';
 import TransitionsModal from './TransitionsModal';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import AvatarImage from "./AvatarImage";
+import AlertModal from "./AlertModal";
 
 export default function Update({ emailFromProp }) {
 
@@ -48,7 +49,7 @@ export default function Update({ emailFromProp }) {
     useEffect(() => {
         setFirstName(userToUpdate.firstName)
         setLastName(userToUpdate.lastName)
-        //setImage(userToUpdate.image)
+        setImage(userToUpdate.image)
         setDate(userToUpdate.dateOB)
         setCity(userToUpdate.city)
         setStreet(userToUpdate.street)
@@ -89,34 +90,18 @@ export default function Update({ emailFromProp }) {
     }
 
     const UpdateUser = (user) => {
-
-        //check is users existss
-        if (localStorage.getItem('users') !== null) {
-
-            let tempUsers = JSON.parse(localStorage.getItem('users'));
-
-            //check if the current user isn't exists
-            if (!tempUsers.find(u => u.userName == user.userName || u.email == user.email)) {
-                tempUsers = [...tempUsers, user]
-                localStorage.setItem('users', JSON.stringify(tempUsers));
-
-                //if the user mange to register we activet sign-in function
-                //need to import sign in function
-                sessionStorage.setItem('currentUser', JSON.stringify(user));
-
-                navigate('profile', { state: user })
-
-            }
-            else {
-                console.log('User allready exists')
-                return false;
-            }
-        }
-        else {
-            localStorage.setItem('users', JSON.stringify([user]));
-            navigate('/profile', { state: user })
-        }
-        return true;
+        //get all users from LC
+        let tempUsers = JSON.parse(localStorage.getItem('users'));
+        //get the user who update
+        let userToDelete= tempUsers.find(u=>u['userName']===userToUpdate.userName);
+        //get his index
+        let index=tempUsers.findIndex(u=>u['userName']==userToDelete.userName);
+        //push the new user (switch)
+        tempUsers[index]=user;
+        //push the new array to LC
+        localStorage.setItem('users', JSON.stringify(tempUsers));
+        //open modal
+        //setOpenModal(true);
     }
 
 
@@ -129,7 +114,7 @@ export default function Update({ emailFromProp }) {
                         Update details
                     </Typography>
                     <Box component='form' onSubmit={handleSubmit} ref={formRef} >
-                        <AvatarImage currentImg={userToUpdate.image}></AvatarImage>
+                        <AvatarImage currentImg={userToUpdate.image} sendImage={setImage}></AvatarImage>
                         <br />
                         <Grid container spacing={3} >
                             {/* User name */}
@@ -295,7 +280,8 @@ export default function Update({ emailFromProp }) {
                     </Box>
                 </Paper>
             </Container>
-            <TransitionsModal toggle={{ openModal, setOpenModal }} text={'User already exists'} />
+            {/* <AlertModal toggle={{openModal, setOpenModal}}></AlertModal> */}
+            {/* <TransitionsModal toggle={{ openModal, setOpenModal }} text={'User already exists'} /> */}
         </>
     )
 }

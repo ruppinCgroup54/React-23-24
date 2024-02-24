@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import Image from '../images/Avatar.png';
 import { Avatar } from '@mui/material';
 
-export default function ({currentImg}) {
+export default function ({currentImg, sendImage}) {
 
     const inputRef = useRef(null);
     const [src, setSrc] = useState(currentImg);
@@ -12,8 +12,8 @@ export default function ({currentImg}) {
     }
 
     const imageChange=(e)=>{
-        console.log(e.target.files[0]);
         setSrc(e.target.files[0]);
+        sendImage(e);
     }
 
     return (
