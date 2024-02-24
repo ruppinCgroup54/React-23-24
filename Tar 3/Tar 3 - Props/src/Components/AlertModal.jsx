@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useState } from 'react';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const style = {
   position: 'absolute',
@@ -30,6 +31,7 @@ export default function AlertModal({toggle}) {
         
       >
         <Box sx={style}>
+          <CheckCircleOutlineIcon></CheckCircleOutlineIcon>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
           </Typography>

@@ -31,21 +31,30 @@ function App() {
           alignItems: "center",
           spacing: 2
         }
-
+      },
+      MuiToggleButton: {
+        styleOverrides: {
+          root:
+            { backgroundColor:'#FF8100' }
+        }
       }
     },
     palette: {
       mode,
       primary: {
-        main: red[300],
-        light: red[600],
-        dark: red[100],
+        main: '#FF8100',
+        light: '#FFA64C',
+        dark: '#FFA64C',
       },
       secondary: {
-        main: orange[300],
+        main: '#FFA64C',
         light: orange[600],
         dark: orange[100],
       },
+      background: {
+        paper: mode === 'dark' ? '#89728C' : '#F2F2F2',
+        default: '#D9D9D9'
+      }
 
     },
 
@@ -57,7 +66,7 @@ function App() {
     <ThemeProvider theme={theme}>
       {/* <AvatarImage></AvatarImage> */}
       <CssBaseline />
-      <ToggleMode setMode={setMode} />
+      <ToggleMode setMode={setMode} mode={mode} />
       <Box sx={{ maxWidth: 800, mx: 'auto' }}>
         <Routes>
           <Route path='/' element={<Login />}></Route>
