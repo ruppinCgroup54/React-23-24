@@ -15,7 +15,7 @@ export default function Profile() {
 
   const navigate = useNavigate();
 
-  const isSmallScreen = useMediaQuery('(min-width:600px)');
+  const isLargeScreen = useMediaQuery('(min-width:600px)');
 
   const removeUser = () => {
     sessionStorage.removeItem('currentUser');
@@ -66,7 +66,7 @@ export default function Profile() {
           </Stack>
 
 
-          <ButtonGroup variant="text" orientation={isSmallScreen ? "horizontal" : "vertical"} fullWidth spacing={2}  >
+          <ButtonGroup variant="text" orientation={isLargeScreen ? "horizontal" : "vertical"} fullWidth spacing={2}  >
             <Button   >Edit user</Button>
             <Button target="_blank" href="https://gold-miner-games.com/classic-gold-miner.htm" >Game</Button>
             <Button onClick={removeUser} color="error">Log out</Button>
