@@ -74,9 +74,9 @@ export default function Profile() {
           </Stack>
 
 
-          <ButtonGroup variant="outlined" orientation={isLargeScreen ? "horizontal" : "vertical"} fullWidth spacing={2}  >
+          <ButtonGroup variant="contained" orientation={isLargeScreen ? "horizontal" : "vertical"} fullWidth spacing={2}  >
             <Button onClick={() => setOpenModal(true)} >Edit user</Button>
-            <Button target="_blank" href="https://gold-miner-games.com/classic-gold-miner.htm" >Game</Button>
+            <Button  target="_blank" href="https://gold-miner-games.com/classic-gold-miner.htm" >Game</Button>
             <Button onClick={removeUser} color="error">Log out</Button>
           </ButtonGroup>
 

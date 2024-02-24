@@ -17,7 +17,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import AvatarImage from "./AvatarImage";
 import AlertModal from "./AlertModal";
 
-export default function Update({ emailFromProp,sendNewUSer }) {
+export default function Update({ emailFromProp, sendNewUSer }) {
 
     const formRef = useRef();
 
@@ -93,15 +93,15 @@ export default function Update({ emailFromProp,sendNewUSer }) {
         //get all users from LC
         let tempUsers = JSON.parse(localStorage.getItem('users'));
         //get the user who update
-        let userToDelete= tempUsers.find(u=>u['userName']===userToUpdate.userName);
+        let userToDelete = tempUsers.find(u => u['userName'] === userToUpdate.userName);
         //get his index
-        let index=tempUsers.findIndex(u=>u['userName']==userToDelete.userName);
+        let index = tempUsers.findIndex(u => u['userName'] == userToDelete.userName);
         //push the new user (switch)
-        tempUsers[index]=user;
+        tempUsers[index] = user;
         //push the new array to LC
         localStorage.setItem('users', JSON.stringify(tempUsers));
 
-        sendNewUSer ? sendNewUSer(user):setOpenModal(true);
+        sendNewUSer ? sendNewUSer(user) : setOpenModal(true);
         //open modal
         //setOpenModal(true);
     }
@@ -133,7 +133,7 @@ export default function Update({ emailFromProp,sendNewUSer }) {
 
                             {/* Email */}
                             <Grid item xs={12}>
-                                <TextField fullWidth required
+                                <TextField fullWidth required disabled
                                     autoComplete="email" type='email' id="email" name="email" label="Enter your email"
                                     error={emailError}
                                     helperText={emailText}
@@ -282,7 +282,7 @@ export default function Update({ emailFromProp,sendNewUSer }) {
                     </Box>
                 </Paper>
             </Container>
-            <AlertModal toggle={{openModal, setOpenModal}}></AlertModal>
+            <AlertModal toggle={{ openModal, setOpenModal }}></AlertModal>
             {/* <TransitionsModal toggle={{ openModal, setOpenModal }} text={'User already exists'} /> */}
         </>
     )

@@ -10,6 +10,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTheme } from '@mui/material';
 
 
 // function createData(name, calories, fat, carbs,protein) {
@@ -40,18 +41,20 @@ export default function SystemAdmin() {
 
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} elevation={6}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
-                    <TableRow>
+                    <TableRow >
                         <TableCell>User Name</TableCell>
                         <TableCell align="right">Full Name</TableCell>
                         <TableCell align="right">Date Of Birth</TableCell>
                         <TableCell align="right">Addresss</TableCell>
                         <TableCell align="right">Email</TableCell>
+                        <TableCell align="right"></TableCell>
+                        <TableCell align="right"></TableCell>
                     </TableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody >
                     {rows.map((row) => (
                         <TableRow
                             key={row.userName}
@@ -62,7 +65,7 @@ export default function SystemAdmin() {
                             <TableCell align="right">{row.dateOB}</TableCell>
                             <TableCell align="right">{row.city + " " + row.street + " " + row.houseNumber}</TableCell>
                             <TableCell align="right">{row.email}</TableCell>
-                            <TableCell align="right"><Link to={"/update/" + row.email} ><ModeEditIcon></ModeEditIcon></Link></TableCell>
+                            <TableCell align="right"><Link to={"/update/" + row.email} ><ModeEditIcon color='secondary'></ModeEditIcon></Link></TableCell>
                             <TableCell align="right"><ClearIcon></ClearIcon></TableCell>
                         </TableRow>
                     ))}

@@ -19,9 +19,6 @@ import Update from './Components/Update'
 function App() {
   const [mode, setMode] = useState('dark');
 
-  const [screenToShow, setscreenToShow] = useState(0);
-
-
   const theme = createTheme({
     components: {
       MuiStack: {
@@ -32,6 +29,25 @@ function App() {
           spacing: 2
         }
       },
+      MuiFormHelperText: {
+        styleOverrides: {
+          root: {
+            position: 'absolute',
+            backgroundColor: '#fff5ee',
+            border: '2px red solid',
+            padding: 5,
+            left: '100%',
+            borderRadius: 10,
+            width: '70%',
+            height: 'inhrit',
+            boxShadow: 'rgb(38, 57, 77) 0px 20px 30px -10px',
+            zIndex: 10,
+            fontWeight:'bold',
+            fontSize:'0.9rem',
+        },
+       
+      }
+      }
     },
     palette: {
       mode,
