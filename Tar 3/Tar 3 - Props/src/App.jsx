@@ -32,12 +32,6 @@ function App() {
           spacing: 2
         }
       },
-      MuiToggleButton: {
-        styleOverrides: {
-          root:
-            { backgroundColor:'#FF8100' }
-        }
-      }
     },
     palette: {
       mode,
@@ -53,7 +47,7 @@ function App() {
       },
       background: {
         paper: mode === 'dark' ? '#89728C' : '#F2F2F2',
-        default: '#D9D9D9'
+        default: mode === 'dark' ? '#89728C' : '#F2F2F2'
       }
 
     },
