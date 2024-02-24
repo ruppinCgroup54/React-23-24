@@ -14,6 +14,7 @@ import ToggleMode from './Components/ToggleMode'
 import SystemAdmin from './Components/SystemAdmin'
 import Update from './Components/Update'
 import { dark } from '@mui/material/styles/createPalette'
+import AvatarImage from './Components/AvatarImage'
 
 
 
@@ -56,6 +57,7 @@ function App() {
   return (
 
     <ThemeProvider theme={theme}>
+      <AvatarImage></AvatarImage>
       <CssBaseline />
       <ToggleMode setMode={setMode} />
       <Box sx={{ maxWidth: 800, mx: 'auto' }}>

@@ -14,6 +14,7 @@ import { allCities } from '../assets/cities';
 import Modal from './TransitionsModal';
 import TransitionsModal from './TransitionsModal';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import AvatarImage from "./AvatarImage";
 
 export default function Update({ emailFromProp }) {
 
@@ -68,20 +69,20 @@ export default function Update({ emailFromProp }) {
             city,
             street,
             houseNumber,
-            password,
             userName,
             email
         }
-
+        
+        UpdateUser(newUser);
         //if register return false show modal of fail
-        setOpenModal(!RegisterUser(newUser));
+        //setOpenModal(!RegisterUser(newUser));
 
         e.stopPropagation();
         e.preventDefault();
 
     }
 
-    const RegisterUser = (user) => {
+    const UpdateUser = (user) => {
 
         //check is users existss
         if (localStorage.getItem('users') !== null) {
@@ -119,9 +120,11 @@ export default function Update({ emailFromProp }) {
             <Container component="main" maxWidth="sm" >
                 <Paper elevation={6} sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                     <Typography component="h1" variant="h4" align="center" mb={2}>
-                        Registertion form
+                        Update details
                     </Typography>
                     <Box component='form' onSubmit={handleSubmit} ref={formRef} >
+                        <AvatarImage currentImg={userToUpdate.image}></AvatarImage>
+                        <br />
                         <Grid container spacing={3} >
                             {/* User name */}
                             <Grid item xs={12}>
@@ -188,7 +191,7 @@ export default function Update({ emailFromProp }) {
                                 />
                             </Grid>
 
-                            {/* Image */}
+                            {/* Image
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     fullWidth required
@@ -207,10 +210,10 @@ export default function Update({ emailFromProp }) {
                                     helperText={imageText}
                                     onChange={setImage}
                                 />
-                            </Grid>
+                            </Grid> */}
 
                             {/* Date of birth */}
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12} >
                                 <TextField
                                     required fullWidth
                                     type='date'
@@ -228,11 +231,12 @@ export default function Update({ emailFromProp }) {
                                 />
 
                             </Grid>
+                           
 
                             {/* city  */}
                             <Grid item xs={12} md={4}>
                                 <Autocomplete
-                                    //autoComplete={false}
+                                    autoComplete={false}
                                     fullWidth
                                     required
                                     id="city"
@@ -245,6 +249,8 @@ export default function Update({ emailFromProp }) {
                                     renderInput={(params) => <TextField {...params} label="Cities" />}
                                     onChange={(e) => setCity(e.currentTarget.value)}
                                     value={city}
+                                    // onInputChange={(e, val) => setCity(val)}
+                                    // inputValue={city}
                                 />
                             </Grid>
 
@@ -279,7 +285,7 @@ export default function Update({ emailFromProp }) {
 
                             </Grid>
                             <Button type='submit' variant="contained" sx={{ my: 3, mx: 'auto' }} >
-                                Register
+                                Save changes
                             </Button>
                         </Grid>
                     </Box>
