@@ -1,11 +1,12 @@
-import { Avatar, Box, Button, ButtonGroup, Divider, Grid, Paper, Stack, Typography, useMediaQuery } from "@mui/material";
-import Image from '../images/users.jpg';
+import { Button, ButtonGroup, Divider, Grid, Paper, Stack, Typography, useMediaQuery } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 import HomeIcon from '@mui/icons-material/Home';
 import CakeIcon from '@mui/icons-material/Cake';
 import EmailIcon from '@mui/icons-material/Email';
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Remove } from "@mui/icons-material";
+import TransitionsModal from "./TransitionsModal";
+import Update from "./Update";
+import { useState } from "react";
 
 export default function Profile() {
 
@@ -22,8 +23,10 @@ export default function Profile() {
     navigate('/');
   }
 
+  const [openModal, setOpenModal] = useState(false);
+
   return (
-    <Grid container sx={{ width: '100vw', maxWidth: 700 }} component={Paper} elevation={10} flexDirection='row'>
+    <Grid container sx={{ mx: 'auto', maxWidth: 800 }} component={Paper} elevation={10} flexDirection='row'>
 
       <Grid item xs={12} md={6} sx={{
         minHeight: 300,
@@ -66,8 +69,8 @@ export default function Profile() {
           </Stack>
 
 
-          <ButtonGroup variant="text" orientation={isLargeScreen ? "horizontal" : "vertical"} fullWidth spacing={2}  >
-            <Button   >Edit user</Button>
+          <ButtonGroup variant="outlined" orientation={isLargeScreen ? "horizontal" : "vertical"} fullWidth spacing={2}  >
+            <Button onClick={() => setOpenModal(true)} >Edit user</Button>
             <Button target="_blank" href="https://gold-miner-games.com/classic-gold-miner.htm" >Game</Button>
             <Button onClick={removeUser} color="error">Log out</Button>
           </ButtonGroup>
@@ -75,6 +78,7 @@ export default function Profile() {
         </Stack>
 
       </Grid>
+      <TransitionsModal toggle={{ openModal, setOpenModal }} text={<Update emailFromProp={currenUser.email} />} />
 
     </Grid >
   )

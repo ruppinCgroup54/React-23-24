@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import './App.css'
 
-import { Button, CssBaseline, ThemeProvider, ToggleButton, createTheme } from '@mui/material'
+import { Box, Button, CssBaseline, ThemeProvider, ToggleButton, createTheme } from '@mui/material'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import Login from './Components/Login'
@@ -13,6 +13,7 @@ import { brown, green, lightGreen, lime, orange, purple, red } from '@mui/materi
 import ToggleMode from './Components/ToggleMode'
 import SystemAdmin from './Components/SystemAdmin'
 import Update from './Components/Update'
+import { dark } from '@mui/material/styles/createPalette'
 
 
 
@@ -46,7 +47,9 @@ function App() {
         light: orange[600],
         dark: orange[100],
       },
+
     },
+
   });
 
 
@@ -55,7 +58,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <ToggleMode setMode={setMode} />
-      <div style={{ marginTop: 30 }}>
+      <Box sx={{ maxWidth: 800, mx: 'auto' }}>
         <Routes>
           <Route path='/' element={<Login />}></Route>
           <Route path='/profile' element={<Profile />}></Route>
@@ -63,7 +66,7 @@ function App() {
           <Route path='/update/:email' element={<Update />}></Route>
           <Route path='/systemAdmin' element={<SystemAdmin />}></Route>
         </Routes>
-      </div>
+      </Box>
     </ThemeProvider>
   )
 }

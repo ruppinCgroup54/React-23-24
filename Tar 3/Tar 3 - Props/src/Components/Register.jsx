@@ -13,7 +13,7 @@ import PasswordTextField from './PasswordTextField';
 import { allCities } from '../assets/cities';
 import Modal from './TransitionsModal';
 import TransitionsModal from './TransitionsModal';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, redirect, useNavigate } from 'react-router-dom';
 
 
 
@@ -48,7 +48,7 @@ export default function Register() {
     e.preventDefault();
 
     let newUser = {
-      password: new FormData(formRef.current).get('password'),
+      password: new FormData(e.currentTarget).get('password'),
       firstName,
       lastName,
       image,
@@ -110,7 +110,7 @@ export default function Register() {
               <Grid item xs={12}>
 
                 <TextField required fullWidth
-                  autoComplete='username' type='text' id="userName" name="userName" label="User name"
+                  autoComplete='username' type='text' id="userName" name="userName" label="User name" 
                   error={userNameError}
                   helperText={userNameText}
                   onChange={(e) => setUserName(e.currentTarget.value)}
@@ -124,9 +124,7 @@ export default function Register() {
                   error={emailError}
                   helperText={emailText}
                   onChange={(e) => setEmail(e.currentTarget.value)}
-
                 />
-
               </Grid>
 
               {/* Password */}
@@ -138,6 +136,7 @@ export default function Register() {
               <Grid item xs={12} sm={6}>
                 <PasswordTextField isConfirm={true} formToCheck={formRef} />
               </Grid>
+
               {/* First name */}
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -184,7 +183,6 @@ export default function Register() {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  // value={imageVal}
                   error={imageError}
                   helperText={imageText}
                   onChange={setImage}
@@ -213,7 +211,7 @@ export default function Register() {
               {/* city  */}
               <Grid item xs={12} md={4}>
                 <Autocomplete
-                  autoComplete={false}
+                  autoHighlight
                   fullWidth
                   required
                   id="city"
