@@ -21,9 +21,6 @@ export default function Login() {
 
   const [initialValue, setInitialValue] = useState("");
 
-  // const ver='top';
-  // const hor='left';
-
   const navigate = useNavigate();
 
   const [openAlert, setOpenAlert] = useState(false);
@@ -44,7 +41,6 @@ export default function Login() {
       userName: data.get('userName'),
       password: data.get('password'),
     };
-    //delete after finish
     loginUser(user);
   };
 

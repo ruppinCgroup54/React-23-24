@@ -54,7 +54,6 @@ function App() {
   return (
 
     <ThemeProvider theme={theme}>
-      <AvatarImage></AvatarImage>
       <CssBaseline />
       <ToggleMode setMode={setMode} />
       <div style={{ marginTop: 30 }}>
