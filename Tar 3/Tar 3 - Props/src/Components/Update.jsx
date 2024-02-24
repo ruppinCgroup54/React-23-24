@@ -249,8 +249,8 @@ export default function Update({ emailFromProp }) {
                                     renderInput={(params) => <TextField {...params} label="Cities" />}
                                     onChange={(e) => setCity(e.currentTarget.value)}
                                     value={city}
-                                    // onInputChange={(e, val) => setCity(val)}
-                                    // inputValue={city}
+                                    onInputChange={(e, val) => setCity(val)}
+
                                 />
                             </Grid>
 
