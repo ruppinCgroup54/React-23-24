@@ -17,7 +17,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import AvatarImage from "./AvatarImage";
 import AlertModal from "./AlertModal";
 
-export default function Update() {
+export default function Update({ emailFromProp }) {
 
     const formRef = useRef();
 
@@ -42,7 +42,7 @@ export default function Update() {
 
     const currentEmail = useParams();
     let users = JSON.parse(localStorage.getItem("users"));
-    const userToUpdate = users.find(userLC => userLC['email'] === currentEmail.email);
+    const userToUpdate = users.find(userLC => userLC['email'] === currentEmail.email || userLC['email'] === emailFromProp);
     console.log(userToUpdate);
 
     useEffect(() => {
@@ -140,7 +140,7 @@ export default function Update() {
 
                             {/* Password confirm */}
                             <Grid item xs={12} sm={6}>
-                                <PasswordTextField isConfirm={true} formToCheck={formRef} initialValue={userToUpdate.password}/>
+                                <PasswordTextField isConfirm={true} formToCheck={formRef} initialValue={userToUpdate.password} />
                             </Grid>
                             {/* First name */}
                             <Grid item xs={12} sm={6}>
@@ -224,14 +224,16 @@ export default function Update() {
                                     required
                                     id="city"
                                     name='city'
+                                    autoHighlight
+                                    isOptionEqualToValue={(option, value) => option.name === value}
                                     options={allCities.sort((a, b) => -b.name[0].localeCompare(a.name[0]))}
                                     groupBy={(option) => option.name[0]}
                                     getOptionLabel={(option) => option.name}
                                     renderInput={(params) => <TextField {...params} label="Cities" />}
-                                    onInputChange={(e, val) => setCity(val)}
                                     onChange={(e) => setCity(e.currentTarget.value)}
-                                    // inputValue={city}
-                                    //value={city}
+                                    value={city}
+                                    onInputChange={(e, val) => setCity(val)}
+
                                 />
                             </Grid>
 
