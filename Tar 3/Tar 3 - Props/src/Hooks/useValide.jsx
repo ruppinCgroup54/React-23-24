@@ -62,7 +62,6 @@ export default function useValide(Value2Check) {
     let choosedate = new Date(date)
 
     let massege = 'Need to be at least 18 years old';
-    console.log('diff_years(choosedate, new Date())', diff_years(new Date(), choosedate))
 
     diff_years(new Date(), choosedate) < 18 ? setErrorsTrue(massege, date) : setErrorsFalse(date);
   }

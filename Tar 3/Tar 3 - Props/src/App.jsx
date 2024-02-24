@@ -3,18 +3,16 @@ import { useState } from 'react'
 
 import './App.css'
 
-import { Box, Button, CssBaseline, ThemeProvider, ToggleButton, createTheme } from '@mui/material'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Box, CssBaseline, ThemeProvider, createTheme } from '@mui/material'
+import { Route, Routes } from 'react-router-dom'
 
 import Login from './Components/Login'
 import Register from './Components/Register'
 import Profile from './Components/Profile'
-import { brown, green, lightGreen, lime, orange, purple, red } from '@mui/material/colors'
+import { orange, red } from '@mui/material/colors'
 import ToggleMode from './Components/ToggleMode'
 import SystemAdmin from './Components/SystemAdmin'
 import Update from './Components/Update'
-import { dark } from '@mui/material/styles/createPalette'
-import AvatarImage from './Components/AvatarImage'
 
 
 
@@ -57,7 +55,7 @@ function App() {
   return (
 
     <ThemeProvider theme={theme}>
-      <AvatarImage></AvatarImage>
+      {/* <AvatarImage></AvatarImage> */}
       <CssBaseline />
       <ToggleMode setMode={setMode} />
       <Box sx={{ maxWidth: 800, mx: 'auto' }}>

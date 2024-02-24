@@ -32,6 +32,7 @@ export default function Update({ emailFromProp }) {
     const [userName, userNameError, userNameText, setUserName] = useValide('userName');
     const [email, emailError, emailText, setEmail] = useValide('userName');
 
+    const [options, setOptions] = useState([])
 
     // handle password confirm
 
@@ -54,7 +55,12 @@ export default function Update({ emailFromProp }) {
         setHouse(userToUpdate.houseNumber)
         setUserName(userToUpdate.userName)
         setEmail(userToUpdate.email)
+
     }, [])
+
+    useEffect(() => {
+        setOptions(allCities)
+    }, [city])
 
 
 
@@ -72,7 +78,7 @@ export default function Update({ emailFromProp }) {
             userName,
             email
         }
-        
+
         UpdateUser(newUser);
         //if register return false show modal of fail
         //setOpenModal(!RegisterUser(newUser));
@@ -231,25 +237,23 @@ export default function Update({ emailFromProp }) {
                                 />
 
                             </Grid>
-                           
+
 
                             {/* city  */}
                             <Grid item xs={12} md={4}>
                                 <Autocomplete
-                                    autoComplete={false}
+                                    autoHighlight
                                     fullWidth
                                     required
                                     id="city"
                                     name='city'
-                                    autoHighlight
-                                    isOptionEqualToValue={(option, value) => option.name === value}
+                                    isOptionEqualToValue={(option, value) => option.name === value.name}
                                     options={allCities.sort((a, b) => -b.name[0].localeCompare(a.name[0]))}
                                     groupBy={(option) => option.name[0]}
                                     getOptionLabel={(option) => option.name}
                                     renderInput={(params) => <TextField {...params} label="Cities" />}
-                                    onChange={(e) => setCity(e.currentTarget.value)}
-                                    value={city}
-                                    onInputChange={(e, val) => setCity(val)}
+                                    onChange={(e, val) => setCity(val)}
+                                    value={{ name: city }}
 
                                 />
                             </Grid>

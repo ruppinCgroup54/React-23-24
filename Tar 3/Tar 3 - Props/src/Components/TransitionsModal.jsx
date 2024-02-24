@@ -12,8 +12,9 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 'fit-content',
   boxShadow: 24,
-  p: 1,
-  textAlign: 'center'
+  textAlign: 'center',
+  height:'90vh',
+  overflowY:'scroll'
 };
 
 export default function TransitionsModal({ text, toggle }) {
@@ -36,13 +37,8 @@ export default function TransitionsModal({ text, toggle }) {
         }}
       >
         <Fade in={toggle.openModal}>
-          <Paper elevation={6} sx={style}>
-            <Typography component='h2' color='red' variant='h6' id="transition-modal-title" sx={{ mt: 1 }}>
-              Error !
-            </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              {text}
-            </Typography>
+          <Paper elevation={6} sx={{...style}}>
+            {text}
           </Paper>
         </Fade>
       </Modal>
