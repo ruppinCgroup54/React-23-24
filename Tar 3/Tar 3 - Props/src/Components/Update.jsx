@@ -17,7 +17,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import AvatarImage from "./AvatarImage";
 import AlertModal from "./AlertModal";
 
-export default function Update({ emailFromProp }) {
+export default function Update({ emailFromProp,sendNewUSer }) {
 
     const formRef = useRef();
 
@@ -100,6 +100,8 @@ export default function Update({ emailFromProp }) {
         tempUsers[index]=user;
         //push the new array to LC
         localStorage.setItem('users', JSON.stringify(tempUsers));
+
+        sendNewUSer ? sendNewUSer(user):setOpenModal(true);
         //open modal
         //setOpenModal(true);
     }
@@ -280,7 +282,7 @@ export default function Update({ emailFromProp }) {
                     </Box>
                 </Paper>
             </Container>
-            {/* <AlertModal toggle={{openModal, setOpenModal}}></AlertModal> */}
+            <AlertModal toggle={{openModal, setOpenModal}}></AlertModal>
             {/* <TransitionsModal toggle={{ openModal, setOpenModal }} text={'User already exists'} /> */}
         </>
     )

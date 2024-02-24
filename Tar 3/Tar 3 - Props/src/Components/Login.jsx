@@ -49,7 +49,7 @@ export default function Login() {
       navigate('/systemAdmin');
     }
     else {
-      let usersFromLocal = JSON.parse(localStorage.getItem("users"));
+      let usersFromLocal = JSON.parse(localStorage.getItem("users")) !== null ? JSON.parse(localStorage.getItem("users")) : [];
       let exist = usersFromLocal.find(userLC => userLC['userName'] === user.userName && userLC['password'] === user.password);
       if (exist != undefined) {
         sessionStorage.setItem("currentUser", JSON.stringify(exist));
@@ -128,10 +128,10 @@ export default function Login() {
               onChange={(e) => setRemember(e.target.checked)}
             />
             <Snackbar open={openAlert} autoHideDuration={3000} onClose={handleClose}
-             anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
-            }} >
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }} >
               <Alert variant="outlined" severity="error">
                 User is not found. please register.
               </Alert>

@@ -6,13 +6,13 @@ import EmailIcon from '@mui/icons-material/Email';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import TransitionsModal from "./TransitionsModal";
 import Update from "./Update";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Profile() {
 
   const { state } = useLocation();
 
-  let currenUser = state;
+  const [currentUser, setCurrentUser] = useState(state);
 
   const navigate = useNavigate();
 
@@ -25,12 +25,17 @@ export default function Profile() {
 
   const [openModal, setOpenModal] = useState(false);
 
+  useEffect(() => {
+    setOpenModal(false)
+  }, [currentUser])
+  
+
   return (
     <Grid container sx={{ mx: 'auto', maxWidth: 800 }} component={Paper} elevation={10} flexDirection='row'>
 
       <Grid item xs={12} md={6} sx={{
         minHeight: 300,
-        backgroundImage: `url(${currenUser?.image})`,
+        backgroundImage: `url(${currentUser?.image})`,
         backgroundRepeat: 'no-repeat',
         backgroundColor: (t) =>
           t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -45,26 +50,26 @@ export default function Profile() {
           justifyContent="flex-end"
           alignItems="flex-start"
           divider={<Divider flexItem />}>
-          <Typography variant="h4" sx={{ fontWeight: 'bold' }} >{currenUser.firstName + " " + currenUser.lastName}</Typography>
+          <Typography variant="h4" sx={{ fontWeight: 'bold' }} >{currentUser.firstName + " " + currentUser.lastName}</Typography>
           {/* user name */}
           <Stack>
-            <Typography variant="p" >{currenUser.userName}</Typography>
+            <Typography variant="p" >{currentUser.userName}</Typography>
             <PersonIcon ></PersonIcon>
           </Stack>
           {/* email */}
           <Stack >
-            <Typography variant="p" > {currenUser.email}</Typography>
+            <Typography variant="p" > {currentUser.email}</Typography>
             <EmailIcon></EmailIcon>
 
           </Stack>
           {/* birth day */}
           <Stack>
-            <Typography variant="p" >{currenUser.dateOB}</Typography>
+            <Typography variant="p" >{currentUser.dateOB}</Typography>
             <CakeIcon></CakeIcon>
           </Stack>
           {/* address */}
           <Stack>
-            <Typography variant="p" >{`${currenUser.city}, ${currenUser.street}, ${currenUser.houseNumber}`}</Typography>
+            <Typography variant="p" >{`${currentUser.city}, ${currentUser.street}, ${currentUser.houseNumber}`}</Typography>
             <HomeIcon></HomeIcon>
           </Stack>
 
@@ -78,7 +83,7 @@ export default function Profile() {
         </Stack>
 
       </Grid>
-      <TransitionsModal toggle={{ openModal, setOpenModal }} text={<Update emailFromProp={currenUser.email} />} />
+      <TransitionsModal toggle={{ openModal, setOpenModal }} text={<Update emailFromProp={currentUser.email} sendNewUSer={setCurrentUser} />} />
 
     </Grid >
   )
