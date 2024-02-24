@@ -13,6 +13,7 @@ import { brown, green, lightGreen, lime, orange, purple, red } from '@mui/materi
 import ToggleMode from './Components/ToggleMode'
 import SystemAdmin from './Components/SystemAdmin'
 import Update from './Components/Update'
+import AvatarImage from './Components/AvatarImage'
 
 
 
@@ -53,6 +54,7 @@ function App() {
   return (
 
     <ThemeProvider theme={theme}>
+      <AvatarImage></AvatarImage>
       <CssBaseline />
       <ToggleMode setMode={setMode} />
       <div style={{ marginTop: 30 }}>
