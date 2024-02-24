@@ -5,7 +5,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { useTheme } from '@emotion/react';
 
-export default function ToggleMode({ setMode }) {
+export default function ToggleMode({ setMode,mode }) {
 
   return (
     <ToggleButtonGroup
@@ -15,11 +15,11 @@ export default function ToggleMode({ setMode }) {
       aria-label="color mode"
       sx={{ position: 'fixed', top: 10, right: '10vw' }}
     >
-      <ToggleButton value="dark" aria-label="dark mode">
-        <DarkModeIcon />
+      <ToggleButton selected={mode==='dark'} value="dark" aria-label="dark mode"  >
+        <DarkModeIcon  />
       </ToggleButton>
-      <ToggleButton value="light" aria-label="light mode">
-        <LightModeIcon />
+      <ToggleButton selected={mode==='light'} value="light" aria-label="light mode" >
+        <LightModeIcon  />
       </ToggleButton>
     </ToggleButtonGroup>
   )
