@@ -4,7 +4,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 
 import Image from '../images/users.jpg';
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import useValide from '../Hooks/useValide';
 import PasswordTextField from './PasswordTextField';
 
@@ -12,26 +12,26 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { UsersContext } from './UsersContextProvider';
+
+
 
 export default function Login() {
 
+  const { rememberUser, loginUser } = useContext(UsersContext);
+
   const [userNameValue, userNameError, userNameText, setUserName] = useValide('userName');
-
-  const [remember, setRemember] = useState(false);
-
-  const [initialValue, setInitialValue] = useState("");
 
   const navigate = useNavigate();
 
   const [openAlert, setOpenAlert] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem('last user') !== null) {
-      let lastUser = JSON.parse(localStorage.getItem('last user'));
-      setUserName(lastUser['userName']);
-      setInitialValue(lastUser['password']);
-    }
-  }, [])
+    setUserName(rememberUser.userName)
+
+  }, [rememberUser])
+
+
 
 
   const handleSubmit = (event) => {
@@ -40,30 +40,17 @@ export default function Login() {
     let user = {
       userName: data.get('userName'),
       password: data.get('password'),
+      remember: data.get('remember')
     };
-    loginUser(user);
-  };
 
-  const loginUser = (user) => {
     if (user.userName == "admin" && user.password == "ad12343211ad") {
       navigate('/systemAdmin');
     }
     else {
-      let usersFromLocal = JSON.parse(localStorage.getItem("users")) !== null ? JSON.parse(localStorage.getItem("users")) : [];
-      let exist = usersFromLocal.find(userLC => userLC['userName'] === user.userName && userLC['password'] === user.password);
-      if (exist != undefined) {
-        sessionStorage.setItem("currentUser", JSON.stringify(exist));
-        if (remember) {
-          localStorage.setItem('last user', JSON.stringify(exist))
-        }
-        navigate('/profile', { state: exist })
-      }
-      else {
-        setOpenAlert(true);
-      }
-    }
-
+      loginUser(user) ? navigate('/profile') : setOpenAlert(true);
+    };
   };
+
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -121,11 +108,10 @@ export default function Login() {
               helperText={userNameText}
               value={userNameValue}
             />
-            <PasswordTextField initialValue={initialValue}></PasswordTextField>
+            <PasswordTextField initialValue={rememberUser.password}></PasswordTextField>
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" checked={remember} />}
+              control={<Checkbox name='remember' value="remember" color="primary" />}
               label="Remember me"
-              onChange={(e) => setRemember(e.target.checked)}
             />
             <Snackbar open={openAlert} autoHideDuration={3000} onClose={handleClose}
               anchorOrigin={{
@@ -151,7 +137,7 @@ export default function Login() {
                 </Link>
               </Grid> */}
               <Grid item>
-                <Link to="/register" style={{color:'ButtonText'}}>
+                <Link to="/register" style={{ color: 'ButtonText' }}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

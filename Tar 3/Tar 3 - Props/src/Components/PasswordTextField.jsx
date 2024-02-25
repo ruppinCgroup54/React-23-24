@@ -17,9 +17,7 @@ export default function PasswordTextField({ formToCheck, isConfirm = false, init
 
   useEffect(() => {
     console.log(initialValue);
-    if (initialValue != "") {
-      setPass(initialValue);
-    }
+    setPass(initialValue);
   }, [initialValue])
 
   const handleConfirm = (e) => {

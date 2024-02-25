@@ -1,5 +1,5 @@
 
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -14,6 +14,7 @@ import { allCities } from '../assets/cities';
 import Modal from './TransitionsModal';
 import TransitionsModal from './TransitionsModal';
 import { Link, Navigate, redirect, useNavigate } from 'react-router-dom';
+import { UsersContext } from './UsersContextProvider';
 
 
 
@@ -21,6 +22,8 @@ import { Link, Navigate, redirect, useNavigate } from 'react-router-dom';
 export default function Register() {
 
   const formRef = useRef();
+
+  const { registerUser } = useContext(UsersContext);
 
   //using custom hook of text filed for validation handling 
 
@@ -61,41 +64,10 @@ export default function Register() {
     }
 
     //if register return false show modal of fail
-    setOpenModal(!RegisterUser(newUser));
-
-
-
-
+    registerUser(newUser) ? navigate('/profile') : setOpenModal(true);
   }
 
-  const RegisterUser = (user) => {
-
-    //check if users existss
-
-    let tempUsers = JSON.parse(localStorage.getItem('users')) !== null ?
-      JSON.parse(localStorage.getItem('users')) :
-      [];
-
-    //check if the current user isn't exists
-    if (!tempUsers.find(u => u.userName == user.userName || u.email == user.email)) {
-      tempUsers = [...tempUsers, user]
-      localStorage.setItem('users', JSON.stringify(tempUsers));
-
-      //if the user mange to register we activet sign-in function
-      //need to import sign in function
-      sessionStorage.setItem('currentUser', JSON.stringify(user));
-
-      navigate('/profile', { state: user })
-
-    }
-    else {
-      console.log('User allready exists')
-      return false;
-    }
-
-
-    return true;
-  }
+  
 
   return (
     <>

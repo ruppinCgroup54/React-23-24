@@ -8,9 +8,10 @@ import Paper from '@mui/material/Paper';
 
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import ClearIcon from '@mui/icons-material/Clear';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material';
+import { UsersContext } from './UsersContextProvider';
 
 
 // function createData(name, calories, fat, carbs,protein) {
@@ -27,18 +28,7 @@ import { useTheme } from '@mui/material';
 
 export default function SystemAdmin() {
 
-    const [rows, setRows] = useState([]);
-
-    useEffect(() => {
-        if (localStorage.getItem('users') !== null) {
-            setRows(JSON.parse(localStorage.getItem('users')));
-        }
-
-        //   return () => {
-        //     second
-        //   }
-    }, []);
-
+    const { usersList, deleteUser } = useContext(UsersContext);
 
     return (
         <TableContainer component={Paper} elevation={6}>
@@ -55,7 +45,7 @@ export default function SystemAdmin() {
                     </TableRow>
                 </TableHead>
                 <TableBody >
-                    {rows.map((row) => (
+                    {usersList.map((row) => (
                         <TableRow
                             key={row.userName}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -66,7 +56,7 @@ export default function SystemAdmin() {
                             <TableCell align="right">{row.city + " " + row.street + " " + row.houseNumber}</TableCell>
                             <TableCell align="right">{row.email}</TableCell>
                             <TableCell align="right"><Link to={"/update/" + row.email} ><ModeEditIcon color='secondary'></ModeEditIcon></Link></TableCell>
-                            <TableCell align="right"><ClearIcon></ClearIcon></TableCell>
+                            <TableCell align="right" onClick={()=>deleteUser(row.email)}><ClearIcon color='error'></ClearIcon></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

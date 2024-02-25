@@ -6,13 +6,12 @@ import EmailIcon from '@mui/icons-material/Email';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import TransitionsModal from "./TransitionsModal";
 import Update from "./Update";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UsersContext } from "./UsersContextProvider";
 
 export default function Profile() {
 
-  const { state } = useLocation();
-
-  const [currentUser, setCurrentUser] = useState(state);
+  const { currentUser } = useContext(UsersContext);
 
   const navigate = useNavigate();
 
@@ -83,7 +82,7 @@ export default function Profile() {
         </Stack>
 
       </Grid>
-      <TransitionsModal toggle={{ openModal, setOpenModal }} text={<Update emailFromProp={currentUser.email} sendNewUSer={setCurrentUser} />} />
+      <TransitionsModal toggle={{ openModal, setOpenModal }} text={<Update emailFromProp={currentUser.email} isCurrent={true}/>} />
 
     </Grid >
   )

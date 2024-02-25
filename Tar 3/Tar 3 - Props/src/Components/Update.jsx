@@ -1,25 +1,26 @@
-import { json, useLocation, useParams } from "react-router-dom"
-import { useEffect, useRef, useState } from 'react';
+import { useParams } from "react-router-dom"
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Autocomplete, FilledInput, Grid, TextField } from '@mui/material';
+import { Autocomplete, Grid, TextField } from '@mui/material';
 
 import useValide from '../Hooks/useValide';
 import PasswordTextField from './PasswordTextField';
 import { allCities } from '../assets/cities';
-import Modal from './TransitionsModal';
-import TransitionsModal from './TransitionsModal';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AvatarImage from "./AvatarImage";
 import AlertModal from "./AlertModal";
+import { UsersContext } from "./UsersContextProvider";
 
-export default function Update({ emailFromProp, sendNewUSer }) {
+export default function Update({ emailFromProp, sendNewUSer,isCurrent=false }) {
 
     const formRef = useRef();
+
+    const { updateUser } = useContext(UsersContext);
 
     //using custom hook of text filed for validation handling 
 
@@ -67,7 +68,7 @@ export default function Update({ emailFromProp, sendNewUSer }) {
 
     const handleSubmit = (e) => {
 
-        let newUser = {
+        let updatedUser = {
             password: new FormData(formRef.current).get('password'),
             firstName,
             lastName,
@@ -80,7 +81,9 @@ export default function Update({ emailFromProp, sendNewUSer }) {
             email
         }
 
-        UpdateUser(newUser);
+        updateUser(updatedUser,isCurrent);
+        setOpenModal(true);
+
         //if register return false show modal of fail
         //setOpenModal(!RegisterUser(newUser));
 
@@ -89,22 +92,7 @@ export default function Update({ emailFromProp, sendNewUSer }) {
 
     }
 
-    const UpdateUser = (user) => {
-        //get all users from LC
-        let tempUsers = JSON.parse(localStorage.getItem('users'));
-        //get the user who update
-        let userToDelete = tempUsers.find(u => u['userName'] === userToUpdate.userName);
-        //get his index
-        let index = tempUsers.findIndex(u => u['userName'] == userToDelete.userName);
-        //push the new user (switch)
-        tempUsers[index] = user;
-        //push the new array to LC
-        localStorage.setItem('users', JSON.stringify(tempUsers));
 
-        sendNewUSer ? sendNewUSer(user) : setOpenModal(true);
-        //open modal
-        //setOpenModal(true);
-    }
 
 
     return (

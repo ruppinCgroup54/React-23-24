@@ -13,6 +13,7 @@ import { orange, red } from '@mui/material/colors'
 import ToggleMode from './Components/ToggleMode'
 import SystemAdmin from './Components/SystemAdmin'
 import Update from './Components/Update'
+import UsersContextProvider from './Components/UsersContextProvider'
 
 
 
@@ -42,11 +43,11 @@ function App() {
             height: 'inhrit',
             boxShadow: 'rgb(38, 57, 77) 0px 20px 30px -10px',
             zIndex: 10,
-            fontWeight:'bold',
-            fontSize:'0.9rem',
-        },
-       
-      }
+            fontWeight: 'bold',
+            fontSize: '0.9rem',
+          },
+
+        }
       }
     },
     palette: {
@@ -78,13 +79,15 @@ function App() {
       <CssBaseline />
       <ToggleMode setMode={setMode} mode={mode} />
       <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-        <Routes>
-          <Route path='/' element={<Login />}></Route>
-          <Route path='/profile' element={<Profile />}></Route>
-          <Route path='/register' element={<Register />}></Route>
-          <Route path='/update/:email' element={<Update />}></Route>
-          <Route path='/systemAdmin' element={<SystemAdmin />}></Route>
-        </Routes>
+        <UsersContextProvider>
+          <Routes>
+            <Route path='/' element={<Login />}></Route>
+            <Route path='/profile' element={<Profile />}></Route>
+            <Route path='/register' element={<Register />}></Route>
+            <Route path='/update/:email' element={<Update />}></Route>
+            <Route path='/systemAdmin' element={<SystemAdmin />}></Route>
+          </Routes>
+        </UsersContextProvider>
       </Box>
     </ThemeProvider>
   )
