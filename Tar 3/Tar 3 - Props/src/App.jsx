@@ -1,27 +1,33 @@
-
 import { useState } from 'react'
-
-import './App.css'
+import { Route, Routes } from 'react-router-dom'
 
 import { Box, CssBaseline, ThemeProvider, createTheme } from '@mui/material'
-import { Route, Routes } from 'react-router-dom'
+import { green, orange } from '@mui/material/colors'
 
 import Login from './Components/Login'
 import Register from './Components/Register'
 import Profile from './Components/Profile'
-import { orange, red } from '@mui/material/colors'
+
 import ToggleMode from './Components/ToggleMode'
 import SystemAdmin from './Components/SystemAdmin'
 import Update from './Components/Update'
 import UsersContextProvider from './Components/UsersContextProvider'
+import './App.css'
 
 
 
 function App() {
-  const [mode, setMode] = useState('dark');
+  const [mode, setMode] = useState('light');
 
+  // customize the app theme
   const theme = createTheme({
     components: {
+      MuiTextField:{
+        defaultProps:{
+          fullWidth:true,
+          required:true
+        }
+      },
       MuiStack: {
         defaultProps: {
           direction: "row-reverse",
@@ -37,45 +43,48 @@ function App() {
             backgroundColor: '#fff5ee',
             border: '2px red solid',
             padding: 5,
-            left: '100%',
+            top: '100%',
             borderRadius: 10,
-            width: '70%',
-            height: 'inhrit',
+            width: 'inherit',
             boxShadow: 'rgb(38, 57, 77) 0px 20px 30px -10px',
             zIndex: 10,
             fontWeight: 'bold',
             fontSize: '0.9rem',
           },
 
+        },
+      },
+      MuiTableCell: {
+        defaultProps: {
+          align: 'center',
         }
       }
+
     },
     palette: {
       mode,
       primary: {
-        main: '#FF8100',
-        light: '#FFA64C',
-        dark: '#FFA64C',
+        main: green[300],
+        light: green[100],
+        dark: green[500],
       },
       secondary: {
-        main: '#FFA64C',
-        light: orange[600],
-        dark: orange[100],
+        main: orange[300],
+        light: orange[100],
+        dark: orange[500],
       },
       background: {
         paper: mode === 'dark' ? '#89728C' : '#F2F2F2',
-        default: mode === 'dark' ? '#89728C' : '#F2F2F2'
+        default: mode === 'dark' ? '#F2F2F2' : '#89728C'
       }
 
     },
 
   });
 
-
   return (
 
     <ThemeProvider theme={theme}>
-      {/* <AvatarImage></AvatarImage> */}
       <CssBaseline />
       <ToggleMode setMode={setMode} mode={mode} />
       <Box sx={{ maxWidth: 800, mx: 'auto' }}>

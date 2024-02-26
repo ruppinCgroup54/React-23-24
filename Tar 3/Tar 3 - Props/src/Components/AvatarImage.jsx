@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import Image from '../images/Avatar.png';
+
 import { Avatar } from '@mui/material';
 
 export default function ({currentImg, sendImage}) {

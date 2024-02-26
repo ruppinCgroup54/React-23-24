@@ -1,25 +1,25 @@
-import { TextField } from "@mui/material";
-import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import { InputAdornment } from '@mui/material';
-import { IconButton } from '@mui/material';
+import { useEffect, useState } from "react";
+
+import { IconButton,TextField, InputAdornment} from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { useEffect, useState } from "react";
+
 import useValide from "../Hooks/useValide";
 
 export default function PasswordTextField({ formToCheck, isConfirm = false, initialValue }) {
-  //console.log(initialValue);
 
   const [passValue, passError, passText, setPass] = useValide('password');
 
   const [confirm, setConfirm] = useState(true);
 
+  // insert password of last user who checked remember
   useEffect(() => {
-    console.log(initialValue);
-    setPass(initialValue);
+    if (initialValue!==undefined) {
+      setPass(initialValue);
+    }
   }, [initialValue])
 
+  // handle the match of password and confirm password
   const handleConfirm = (e) => {
     setPass(e.target.value);
 
@@ -29,6 +29,7 @@ export default function PasswordTextField({ formToCheck, isConfirm = false, init
     }
   }
 
+  // visability of password
   const [eye, setEye] = useState(true);
 
   const chgEye = () => {

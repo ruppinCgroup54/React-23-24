@@ -1,19 +1,15 @@
-import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Paper, Box, Grid, Typography } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-
-
-
-import Image from '../images/users.jpg';
 import { useContext, useEffect, useState } from 'react'
-import useValide from '../Hooks/useValide';
-import PasswordTextField from './PasswordTextField';
-
 import { Link, useNavigate } from 'react-router-dom';
 
+import { Avatar, Button, TextField, FormControlLabel, Checkbox, Paper, Box, Grid, Typography, useTheme } from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import { UsersContext } from './UsersContextProvider';
 
+import Image from '../images/users.jpg';
+import useValide from '../Hooks/useValide';
+import PasswordTextField from './PasswordTextField';
+import { UsersContext } from './UsersContextProvider';
 
 
 export default function Login() {
@@ -24,14 +20,16 @@ export default function Login() {
 
   const navigate = useNavigate();
 
+  const theme = useTheme();
+
   const [openAlert, setOpenAlert] = useState(false);
 
+  // insert the last user who check remember
   useEffect(() => {
-    setUserName(rememberUser.userName)
-
+    if (rememberUser.userName !== undefined) {
+      setUserName(rememberUser.userName)
+    }
   }, [rememberUser])
-
-
 
 
   const handleSubmit = (event) => {
@@ -43,14 +41,17 @@ export default function Login() {
       remember: data.get('remember')
     };
 
+
     if (user.userName == "admin" && user.password == "ad12343211ad") {
+      // if current user is admin move to system admin page
       navigate('/systemAdmin');
     }
     else {
+
+      //if login successful move to profile else set an alert that detailes are wrong
       loginUser(user) ? navigate('/profile') : setOpenAlert(true);
     };
   };
-
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -60,22 +61,17 @@ export default function Login() {
     setOpenAlert(false);
   };
 
-
   return (
     <Grid container component="main"  >
-      <CssBaseline />
-      <Grid
-        item
-        xs={false}
-        sm={4}
-        md={7}
+      <Grid item xs={false} sm={4} md={7}
         sx={{
           backgroundImage: `url(${Image})`,
           backgroundRepeat: 'no-repeat',
           backgroundColor: (t) =>
             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-          backgroundSize: 'cover',
+          backgroundSize: 'contain',
           backgroundPosition: 'center',
+
         }}
       />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -91,10 +87,13 @@ export default function Login() {
           <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
+
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            {/* user name */}
             <TextField
               margin="normal"
               required
@@ -108,20 +107,24 @@ export default function Login() {
               helperText={userNameText}
               value={userNameValue}
             />
+            {/* password */}
             <PasswordTextField initialValue={rememberUser.password}></PasswordTextField>
+            {/* remember checkbox */}
             <FormControlLabel
               control={<Checkbox name='remember' value="remember" color="primary" />}
               label="Remember me"
             />
+            {/* alert if user already exists */}
             <Snackbar open={openAlert} autoHideDuration={3000} onClose={handleClose}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'center',
               }} >
-              <Alert variant="outlined" severity="error">
+              <Alert severity="error">
                 User is not found. please register.
               </Alert>
             </Snackbar>
+
             <Button
               type="submit"
               fullWidth
@@ -130,14 +133,11 @@ export default function Login() {
             >
               Sign In
             </Button>
+
             <Grid container>
-              {/* <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid> */}
+
               <Grid item>
-                <Link to="/register" style={{ color: 'ButtonText' }}>
+                <Link to="/register" style={{ color: `${theme.palette.text.primary}` }}  >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

@@ -1,25 +1,20 @@
 import * as React from 'react';
-import Backdrop from '@mui/material/Backdrop';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Typography from '@mui/material/Typography';
-import { Paper } from '@mui/material';
+
+import { Paper,Backdrop,Modal,Fade } from '@mui/material';
 
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 'fit-content',
+  minWidth: 'fit-content',
+  width: '90vw',
   boxShadow: 24,
-  textAlign: 'center',
-  height:'90vh',
-  overflowY:'scroll'
+  height: '90vh',
+  overflowY: 'scroll'
 };
 
-export default function TransitionsModal({ text, toggle }) {
-
-
+export default function UpdateModal({ text, toggle }) {
 
   return (
     <div >
@@ -37,7 +32,7 @@ export default function TransitionsModal({ text, toggle }) {
         }}
       >
         <Fade in={toggle.openModal}>
-          <Paper elevation={6} sx={{...style}}>
+          <Paper elevation={6} sx={{ ...style }}>
             {text}
           </Paper>
         </Fade>

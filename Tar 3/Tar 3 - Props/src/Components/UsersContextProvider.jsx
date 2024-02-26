@@ -8,26 +8,27 @@ export default function UsersContextProvider(props) {
   const [rememberUser, setRememberUser] = useState({});
   const [currentUser, setCurrentUser] = useState({});
 
+  //get all data from local storge
   useEffect(() => {
-    if (localStorage.getItem('last user') !== null) {
-      let lastUser = JSON.parse(localStorage.getItem('last user'));
-      setRememberUser(lastUser);
-    }
 
     if (localStorage.getItem("users") !== null) {
       let usersFromLocal = JSON.parse(localStorage.getItem("users"));
       setUsersList(usersFromLocal);
     }
-    
+
+    if (localStorage.getItem('last user') !== null) {
+      let lastUser = JSON.parse(localStorage.getItem('last user'));
+      setRememberUser(lastUser);
+    }
+
+
     if (sessionStorage.getItem("currentUser") !== null) {
       let current = JSON.parse(sessionStorage.getItem("currentUser"));
       setCurrentUser(current);
     }
 
-    
+
   }, [])
-
-
 
   const loginUser = (user) => {
     let exist = usersList.find(userLC => userLC['userName'] === user.userName && userLC['password'] === user.password);
@@ -37,7 +38,7 @@ export default function UsersContextProvider(props) {
       if (user.remember) {
         localStorage.setItem('last user', JSON.stringify(exist));
       }
-      else{
+      else {
         localStorage.removeItem('last user')
       }
       return true;
@@ -80,20 +81,22 @@ export default function UsersContextProvider(props) {
     setUsersList(tempUsers);
     //push the new array to LC
     localStorage.setItem('users', JSON.stringify(tempUsers));
-    
+
     if (isCurrent) {
       sessionStorage.setItem('currentUser', JSON.stringify(updateUser));
       setCurrentUser(updateUser);
-      rememberUser.userName!=null && localStorage.setItem('last user', JSON.stringify(updateUser));
+      rememberUser.userName != null && localStorage.setItem('last user', JSON.stringify(updateUser));
     }
     //open modal
     //setOpenModal(true);
   }
 
-
+  const logOutUser = () => {
+    sessionStorage.removeItem('currentUser');
+  }
 
   return (
-    <UsersContext.Provider value={{ rememberUser, loginUser, currentUser, registerUser, usersList, deleteUser, updateUser }}>
+    <UsersContext.Provider value={{ rememberUser, loginUser, currentUser, registerUser, usersList, deleteUser, updateUser, logOutUser }}>
       {props.children}
     </UsersContext.Provider>
   )

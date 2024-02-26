@@ -1,26 +1,22 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useContext, useEffect, useRef, useState } from 'react';
 
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { Autocomplete, Grid, TextField } from '@mui/material';
+import { Autocomplete, Grid, TextField, Box, Container, Paper, Button, Typography } from '@mui/material';
 
 import useValide from '../Hooks/useValide';
 import PasswordTextField from './PasswordTextField';
-import { allCities } from '../assets/cities';
-import { useNavigate } from 'react-router-dom';
 import AvatarImage from "./AvatarImage";
 import AlertModal from "./AlertModal";
+import { allCities } from '../assets/cities';
 import { UsersContext } from "./UsersContextProvider";
 
-export default function Update({ emailFromProp, sendNewUSer,isCurrent=false }) {
+export default function Update({ emailFromProp, isCurrent = false }) {
 
     const formRef = useRef();
 
-    const { updateUser } = useContext(UsersContext);
+    const { updateUser, usersList } = useContext(UsersContext);
+
+    const navigate = useNavigate();
 
     //using custom hook of text filed for validation handling 
 
@@ -36,17 +32,13 @@ export default function Update({ emailFromProp, sendNewUSer,isCurrent=false }) {
 
     const [options, setOptions] = useState([])
 
-    // handle password confirm
-
     const [openModal, setOpenModal] = useState(false);
 
-    const navigate = useNavigate();
-
+    //get the user to update from 
     const currentEmail = useParams();
-    let users = JSON.parse(localStorage.getItem("users"));
-    const userToUpdate = users.find(userLC => userLC['email'] === currentEmail.email || userLC['email'] === emailFromProp);
-    console.log(userToUpdate);
+    const userToUpdate = usersList.find(userLC => userLC['email'] === currentEmail.email || userLC['email'] === emailFromProp);
 
+    //update the form fields after geting the data
     useEffect(() => {
         setFirstName(userToUpdate.firstName)
         setLastName(userToUpdate.lastName)
@@ -64,8 +56,6 @@ export default function Update({ emailFromProp, sendNewUSer,isCurrent=false }) {
         setOptions(allCities)
     }, [city])
 
-
-
     const handleSubmit = (e) => {
 
         let updatedUser = {
@@ -81,19 +71,15 @@ export default function Update({ emailFromProp, sendNewUSer,isCurrent=false }) {
             email
         }
 
-        updateUser(updatedUser,isCurrent);
+        updateUser(updatedUser, isCurrent);
         setOpenModal(true);
 
-        //if register return false show modal of fail
-        //setOpenModal(!RegisterUser(newUser));
+        !isCurrent && navigate('/systemAdmin')
 
         e.stopPropagation();
         e.preventDefault();
 
     }
-
-
-
 
     return (
         <>
@@ -172,27 +158,6 @@ export default function Update({ emailFromProp, sendNewUSer,isCurrent=false }) {
                                 />
                             </Grid>
 
-                            {/* Image
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    fullWidth required
-                                    type='file'
-                                    id='file'
-                                    name='image'
-                                    label='Image'
-                                    inputProps={{
-                                        accept: "image/jpg, image/jpeg"
-                                    }}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    value={image}
-                                    error={imageError}
-                                    helperText={imageText}
-                                    onChange={setImage}
-                                />
-                            </Grid> */}
-
                             {/* Date of birth */}
                             <Grid item xs={12} >
                                 <TextField
@@ -210,9 +175,7 @@ export default function Update({ emailFromProp, sendNewUSer,isCurrent=false }) {
                                     onChange={(e) => setDate(e.currentTarget.value)}
                                     value={dateOB}
                                 />
-
                             </Grid>
-
 
                             {/* city  */}
                             <Grid item xs={12} md={4}>
@@ -223,13 +186,12 @@ export default function Update({ emailFromProp, sendNewUSer,isCurrent=false }) {
                                     id="city"
                                     name='city'
                                     isOptionEqualToValue={(option, value) => option.name === value.name}
-                                    options={allCities.sort((a, b) => -b.name[0].localeCompare(a.name[0]))}
+                                    options={options.sort((a, b) => -b.name[0].localeCompare(a.name[0]))}
                                     groupBy={(option) => option.name[0]}
                                     getOptionLabel={(option) => option.name}
                                     renderInput={(params) => <TextField {...params} label="Cities" />}
                                     onChange={(e, val) => setCity(val)}
                                     value={{ name: city }}
-
                                 />
                             </Grid>
 
@@ -260,17 +222,17 @@ export default function Update({ emailFromProp, sendNewUSer,isCurrent=false }) {
                                     helperText={houseText}
                                     onChange={(e) => setHouse(e.currentTarget.value)}
                                 />
-
-
                             </Grid>
+
                             <Button type='submit' variant="contained" sx={{ my: 3, mx: 'auto' }} >
                                 Save changes
                             </Button>
+
                         </Grid>
                     </Box>
                 </Paper>
             </Container>
-            <AlertModal toggle={{ openModal, setOpenModal }}></AlertModal>
+            <AlertModal toggle={{ openModal, setOpenModal }} text={'User has been updated'} isGood={true}></AlertModal>
             {/* <TransitionsModal toggle={{ openModal, setOpenModal }} text={'User already exists'} /> */}
         </>
     )

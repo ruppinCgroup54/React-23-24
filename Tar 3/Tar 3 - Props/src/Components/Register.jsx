@@ -1,20 +1,15 @@
 
 import { useContext, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { Autocomplete, FilledInput, Grid, TextField } from '@mui/material';
+import { Autocomplete, Grid, TextField,Box,Container,Paper, Button, Typography } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import useValide from '../Hooks/useValide';
 import PasswordTextField from './PasswordTextField';
 import { allCities } from '../assets/cities';
-import Modal from './TransitionsModal';
-import TransitionsModal from './TransitionsModal';
-import { Link, Navigate, redirect, useNavigate } from 'react-router-dom';
 import { UsersContext } from './UsersContextProvider';
+import AlertModal from './AlertModal';
 
 
 
@@ -38,8 +33,6 @@ export default function Register() {
   const [email, emailError, emailText, setEmail] = useValide('userName');
 
   const validToSubmit = firstNameError || lastNameError || imageError || dateError || cityError || streetError || houseError || userNameError || emailError;
-
-  // handle password confirm
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -67,14 +60,15 @@ export default function Register() {
     registerUser(newUser) ? navigate('/profile') : setOpenModal(true);
   }
 
-  
+
 
   return (
     <>
 
       <Container component="main" maxWidth="sm" >
-        <Paper elevation={6} sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-          <Typography component="h1" variant="h4" align="center" mb={2}>
+        <Paper elevation={6} sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, position: 'relative' }}>
+          <Link to={'/'} style={{ position: 'absolute', left: 5, top: 5, }}><ArrowBackIcon fontSize='large' color='primary'></ArrowBackIcon> </Link>
+          <Typography component="h1" variant="h4" align="center" my={3}>
             Registertion form
           </Typography>
           <Box component='form' onSubmit={handleSubmit} ref={formRef} >
@@ -82,7 +76,7 @@ export default function Register() {
               {/* User name */}
               <Grid item xs={12}>
 
-                <TextField required fullWidth
+                <TextField 
                   autoComplete='username' type='text' id="userName" name="userName" label="User name"
                   error={userNameError}
                   helperText={userNameText}
@@ -92,7 +86,7 @@ export default function Register() {
 
               {/* Email */}
               <Grid item xs={12}>
-                <TextField fullWidth required
+                <TextField 
                   autoComplete="email" type='email' id="email" name="email" label="Enter your email"
                   error={emailError}
                   helperText={emailText}
@@ -113,11 +107,9 @@ export default function Register() {
               {/* First name */}
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="firstName"
                   name="firstName"
                   label="First name"
-                  fullWidth
                   autoComplete="given-name"
                   value={firstName}
                   error={firstNameError}
@@ -129,11 +121,9 @@ export default function Register() {
               {/* Last name */}
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="lastName"
                   name="lastName"
                   label="Last name"
-                  fullWidth
                   autoComplete="family-name"
                   value={lastName}
                   error={lastNameError}
@@ -145,7 +135,6 @@ export default function Register() {
               {/* Image */}
               <Grid item xs={12} sm={6}>
                 <TextField
-                  fullWidth required
                   type='file'
                   id='file'
                   name='image'
@@ -165,7 +154,6 @@ export default function Register() {
               {/* Date of birth */}
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required fullWidth
                   type='date'
                   id='DateOB'
                   name='dateOB'
@@ -185,8 +173,6 @@ export default function Register() {
               <Grid item xs={12} md={4}>
                 <Autocomplete
                   autoHighlight
-                  fullWidth
-                  required
                   id="city"
                   name='city'
                   options={allCities.sort((a, b) => -b.name[0].localeCompare(a.name[0]))}
@@ -201,11 +187,9 @@ export default function Register() {
               {/* street */}
               <Grid item xs={12} md={4}>
                 <TextField
-                  required
                   id="street"
                   label="Street"
                   name='street'
-                  fullWidth
                   autoComplete="street-address"
                   value={street}
                   error={streetError}
@@ -216,7 +200,7 @@ export default function Register() {
 
               {/* house number */}
               <Grid item xs={12} md={4} >
-                <TextField required fullWidth type='number'
+                <TextField type='number'
                   label='House number'
                   name='houseNumber'
                   inputProps={{ min: 0 }}
@@ -235,7 +219,8 @@ export default function Register() {
           </Box>
         </Paper>
       </Container>
-      <TransitionsModal toggle={{ openModal, setOpenModal }} text={'User already exists'} />
+      {/* alert modal if there is a user with same email or user name */}
+      <AlertModal toggle={{ openModal, setOpenModal }} text={'User already exists'} isGood={false} />
     </>
   );
 }
