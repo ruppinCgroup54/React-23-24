@@ -24,7 +24,9 @@ export default function Profile() {
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    setOpenModal(false)
+    setTimeout(() => {
+      setOpenModal(false)
+    }, 1000);
   }, [currentUser])
 
 

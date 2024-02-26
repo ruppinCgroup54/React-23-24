@@ -74,7 +74,9 @@ export default function Update({ emailFromProp, isCurrent = false }) {
         updateUser(updatedUser, isCurrent);
         setOpenModal(true);
 
-        !isCurrent && navigate('/systemAdmin')
+        setTimeout(() => {
+            !isCurrent && navigate('/systemAdmin')
+        }, 2000);
 
         e.stopPropagation();
         e.preventDefault();
