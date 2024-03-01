@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import { Box, CssBaseline, ThemeProvider, createTheme } from '@mui/material'
-import { green, orange } from '@mui/material/colors'
+import { brown, green, grey, orange } from '@mui/material/colors'
 
 import Login from './Components/Login'
 import Register from './Components/Register'
@@ -22,10 +22,10 @@ function App() {
   // customize the app theme
   const theme = createTheme({
     components: {
-      MuiTextField:{
-        defaultProps:{
-          fullWidth:true,
-          required:true
+      MuiTextField: {
+        defaultProps: {
+          fullWidth: true,
+          required: true
         }
       },
       MuiStack: {
@@ -40,15 +40,13 @@ function App() {
         styleOverrides: {
           root: {
             position: 'absolute',
-            backgroundColor: '#fff5ee',
-            border: '2px red solid',
+            backgroundColor: 'rgba(255,255,255,0.5)',
             padding: 5,
             top: '100%',
             borderRadius: 10,
             width: 'inherit',
             boxShadow: 'rgb(38, 57, 77) 0px 20px 30px -10px',
             zIndex: 10,
-            fontWeight: 'bold',
             fontSize: '0.9rem',
           },
 
@@ -64,18 +62,23 @@ function App() {
     palette: {
       mode,
       primary: {
-        main: green[300],
-        light: green[100],
-        dark: green[500],
-      },
-      secondary: {
         main: orange[300],
         light: orange[100],
         dark: orange[500],
       },
+      secondary: {
+
+        main: brown[300],
+        light: brown[100],
+        dark: brown[500],
+      },
+      text: {
+        primary: mode === 'dark' ? grey[900] : '#fff',
+        secondary: grey[800],
+      },
       background: {
-        paper: mode === 'dark' ? '#89728C' : '#F2F2F2',
-        default: mode === 'dark' ? '#F2F2F2' : '#89728C'
+        paper: mode === 'dark' ? '#e0cdbe' : '#262626',
+        default: mode === 'dark' ? '#262626' : '#e0cdbe',
       }
 
     },

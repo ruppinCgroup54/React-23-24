@@ -89,7 +89,7 @@ export default function Update({ emailFromProp, isCurrent = false }) {
             <Container component="main" maxWidth="sm" >
                 <Paper elevation={6} sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                     <Typography component="h1" variant="h4" align="center" mb={2}>
-                        Update details
+                        Update Details
                     </Typography>
                     <Box component='form' onSubmit={handleSubmit} ref={formRef} >
                         <AvatarImage currentImg={userToUpdate.image} sendImage={setImage}></AvatarImage>

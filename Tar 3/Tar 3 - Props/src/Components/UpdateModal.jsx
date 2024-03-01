@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Paper,Backdrop,Modal,Fade } from '@mui/material';
+import { Paper, Backdrop, Modal, Fade } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -8,7 +8,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   minWidth: 'fit-content',
-  width: '90vw',
+  // width: '90vw',
   boxShadow: 24,
   height: '90vh',
   overflowY: 'scroll'

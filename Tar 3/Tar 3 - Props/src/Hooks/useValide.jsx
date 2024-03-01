@@ -27,7 +27,7 @@ export default function useValide(Value2Check) {
   const handlePassword = (newPassword = "") => {
     let pattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{7,12}$/
 
-    let errorMassege = newPassword.length < 7 || newPassword.length > 12 ? 'Password have to be between 7 - 12 characters' : 'Password must contain at One number one uppercase letter and one special character'
+    let errorMassege = newPassword.length < 7 || newPassword.length > 12 ? 'Password must be between 7 - 12 characters.' : 'Password must contain at One number one uppercase letter and one special character.'
     pattern.test(newPassword) || newPassword === "" || newPassword === 'ad12343211ad' ? setErrorsFalse(newPassword) : setErrorsTrue(errorMassege, newPassword);
   }
 
